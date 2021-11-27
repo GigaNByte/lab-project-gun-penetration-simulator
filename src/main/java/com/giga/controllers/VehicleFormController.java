@@ -6,6 +6,6 @@ import javafx.fxml.FXML;
 public class VehicleFormController {
     @FXML
     public void submitVehicleForm() {
-        
+
     }
 }

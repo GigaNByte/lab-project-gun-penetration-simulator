@@ -26,7 +26,6 @@
                   <fx:include source="vehicleForm.fxml" fx:id="vehicleFormPane"/>
                </content>
             </Tab>
-
          </tabs>
       </TabPane>
    </children>
