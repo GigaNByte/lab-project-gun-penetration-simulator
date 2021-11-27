@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.text.Font?>
+<?import com.giga.controllers.VehicleFormController?>
+
+<AnchorPane fx:controller="com.giga.controllers.VehicleFormController"
+    xmlns="http://javafx.com/javafx/17"
+    xmlns:fx="http://javafx.com/fxml/1" fx:id="vehicleFormPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+    <children>
+        <VBox layoutX="26.0" layoutY="34.0">
+            <children>
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0">
+                    <children>
+                        <VBox spacing="20.0">
+                            <children>
+                                <Label text="Vehicle Name">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label text="Nation">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label text="Front Armor Thickness">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label text="Side Armor Thickness">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="10.0" layoutY="150.0" text="Front Armor Angle">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="10.0" layoutY="185.0" text="Side Armor Angle">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="10.0" layoutY="220.0" text="Gun">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                        <VBox spacing="20.0">
+                            <children>
+                                <TextField fx:id="vFormName" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
+                                <TextField fx:id="vFormNation" layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
+                                <Spinner fx:id="vFormFrontArmorThick" editable="true" minHeight="-Infinity" prefHeight="20.0" />
+                                <Spinner fx:id="vFormSideArmorThick" editable="true" layoutX="10.0" layoutY="90.0" minHeight="-Infinity" prefHeight="20.0" />
+                                <Spinner fx:id="vFormFrontArmorAngle" editable="true" layoutX="10.0" layoutY="136.0" minHeight="-Infinity" prefHeight="20.0" />
+                                <Spinner fx:id="vFormSideArmorAngle" editable="true" layoutX="10.0" layoutY="136.0" minHeight="-Infinity" prefHeight="20.0" />
+                                <ChoiceBox fx:id="vFormGun" maxHeight="20.0" minHeight="-Infinity" prefHeight="20.0" prefWidth="150.0" />
+                            </children>
+                        </VBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                </HBox>
+                <HBox prefWidth="360.0" spacing="20.0">
+                    <children>
+                        <Button fx:id="vFormSubmit" mnemonicParsing="false" onAction="#submitVehicleForm" text="Add Vehicle" />
+                    </children>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+            </children>
+        </VBox>
+        <VBox layoutX="385.0" layoutY="34.0">
+            <children>
+                <TableView fx:id="TableView12" nodeOrientation="LEFT_TO_RIGHT">
+                    <columns>
+                        <TableColumn fx:id="vColumnId" maxWidth="-1.0" minWidth="50.0" prefWidth="-1.0" text="ID" />
+                        <TableColumn fx:id="vColumnName" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Vehicle Name" />
+                        <TableColumn fx:id="vColumnGun" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Gun " />
+                        <TableColumn fx:id="vColumnNation" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="Nation" />
+                        <TableColumn fx:id="vColumnFrontThick" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Front Armor Thick." />
+                        <TableColumn fx:id="vColumnSideArmorAngle" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Side Armor Angle" />
+                        <TableColumn fx:id="vColumnFrontThick" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Front Armor Thick." />
+                        <TableColumn fx:id="vColumnSideArmorAngle" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Side Armor Angle" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</AnchorPane>
