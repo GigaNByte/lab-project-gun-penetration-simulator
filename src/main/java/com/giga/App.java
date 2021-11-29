@@ -7,7 +7,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 /**
  * JavaFX App
  */
@@ -20,6 +22,9 @@ public class App extends Application {
         scene = new Scene(loadFXML("MainView"));
         stage.setScene(scene);
         stage.show();
+        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.close();
     }
 
     static void setRoot(String fxml) throws IOException {

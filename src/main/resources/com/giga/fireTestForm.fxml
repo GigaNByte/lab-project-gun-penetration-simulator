@@ -11,7 +11,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Spinner?>
 <?import javafx.scene.text.Font?>
-<?import com.giga.controllers.FireTestFormController?>
+
 
 <AnchorPane fx:controller="com.giga.controllers.FireTestFormController"
     xmlns="http://javafx.com/javafx/17"

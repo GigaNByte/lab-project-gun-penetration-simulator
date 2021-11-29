@@ -1,4 +1,6 @@
 module-info.class
-com\giga\SecondaryController.class
-com\giga\PrimaryController.class
+com\giga\controllers\FireTestFormController.class
+com\giga\controllers\GunFormController.class
+com\giga\controllers\MainController.class
+com\giga\controllers\VehicleFormController.class
 com\giga\App.class

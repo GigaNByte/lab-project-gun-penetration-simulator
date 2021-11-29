@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.layout.VBox?>
-<?import com.giga.controllers.MainController?>
+
 
 <VBox xmlns="http://javafx.com/javafx/17"
    xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.giga.controllers.MainController">
@@ -15,16 +15,16 @@
                <content>
                   <fx:include source="fireTestForm.fxml" fx:id="fireTestFormPane"/>
                </content>
-               <Tab text="Add Gun">
-                  <content>
-                     <fx:include source="gunForm.fxml" fx:id="gunFormPane"/>
-                  </content>
-               </Tab>
-               <Tab text="Add Vehicle">
-                  <content>
-                     <fx:include source="vehicleForm.fxml" fx:id="vehicleFormPane"/>
-                  </content>
-               </Tab>
+            </Tab>
+            <Tab text="Add Gun">
+               <content>
+                  <fx:include source="gunForm.fxml" fx:id="gunFormPane"/>
+               </content>
+            </Tab>
+            <Tab text="Add Vehicle">
+               <content>
+                  <fx:include source="vehicleForm.fxml" fx:id="vehicleFormPane"/>
+               </content>
             </Tab>
          </tabs>
       </TabPane>
