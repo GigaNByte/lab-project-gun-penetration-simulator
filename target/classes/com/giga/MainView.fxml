@@ -2,28 +2,25 @@
 
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox xmlns="http://javafx.com/javafx/17"
-   xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.giga.controllers.MainController">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.giga.controllers.MainController">
    <children>
       <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <tabs>
-            <Tab text="Fire Test">
+            <Tab onSelectionChanged="#fireTestTabChanged" text="Fire Test">
                <content>
-                  <fx:include source="fireTestForm.fxml" fx:id="fireTestFormPane"/>
+                  <fx:include fx:id="FireTestForm" source="fireTestForm.fxml" />
                </content>
             </Tab>
-            <Tab text="Add Gun">
+            <Tab onSelectionChanged="#gunTabChanged" text="Add Gun">
                <content>
-                  <fx:include source="gunForm.fxml" fx:id="gunFormPane"/>
+                  <fx:include fx:id="GunForm" source="gunForm.fxml" />
                </content>
             </Tab>
-            <Tab text="Add Vehicle">
+            <Tab onSelectionChanged="#vehicleTabChanged" text="Add Vehicle">
                <content>
-                  <fx:include source="vehicleForm.fxml" fx:id="vehicleFormPane"/>
+                  <fx:include fx:id="VehicleForm" source="vehicleForm.fxml" />
                </content>
             </Tab>
          </tabs>
