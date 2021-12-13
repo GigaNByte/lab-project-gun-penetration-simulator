@@ -22,7 +22,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("MainView"));
         stage.setScene(scene);
         stage.show();
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.close();
     }

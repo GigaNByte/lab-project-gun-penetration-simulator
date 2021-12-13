@@ -15,8 +15,8 @@
         <property name="hibernate.connection.charSet"  >UTF-8</property>
         <property name="hibernate.hbm2ddl.auto" >create</property>
 
-        <mapping class="com.giga.model.Guns"/>
-        <mapping class="com.giga.model.Vehicles"/>
-        <mapping class="com.giga.model.SavedTests"/>
+        <mapping class="com.giga.model.Gun"/>
+        <mapping class="com.giga.model.Vehicle"/>
+        <mapping class="com.giga.model.SavedTest"/>
     </session-factory>
 </hibernate-configuration>

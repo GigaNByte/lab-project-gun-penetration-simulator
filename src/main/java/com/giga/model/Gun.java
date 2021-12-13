@@ -1,19 +1,18 @@
 package com.giga.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-public class Guns {
+@Table(name="guns")
+public class Gun {
     private Integer id;
     private String gunName;
     private String ammoName;
     private String nation;
     private String ammoType;
-    private Integer barrelLenght;
-    private Integer caliber;
+    private Double barrelLenght;
+    private Double caliber;
     private Integer muzzleVelocity;
     private Integer pen100;
     private Integer pen300;
@@ -22,8 +21,10 @@ public class Guns {
     private Integer pen1500;
     private Integer pen2000;
     private Integer pen3000;
+    private Set<Vehicle> vehicles;
 
     @Id
+    @GeneratedValue
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -75,21 +76,21 @@ public class Guns {
 
     @Basic
     @Column(name = "barrel_lenght", nullable = false)
-    public Integer getBarrelLenght() {
+    public Double getBarrelLenght() {
         return barrelLenght;
     }
 
-    public void setBarrelLenght(Integer barrelLenght) {
+    public void setBarrelLenght(Double barrelLenght) {
         this.barrelLenght = barrelLenght;
     }
 
     @Basic
     @Column(name = "caliber", nullable = false)
-    public Integer getCaliber() {
+    public Double getCaliber() {
         return caliber;
     }
 
-    public void setCaliber(Integer caliber) {
+    public void setCaliber(Double caliber) {
         this.caliber = caliber;
     }
 
@@ -173,50 +174,16 @@ public class Guns {
         this.pen3000 = pen3000;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Guns guns = (Guns) o;
-
-        if (id != null ? !id.equals(guns.id) : guns.id != null) return false;
-        if (gunName != null ? !gunName.equals(guns.gunName) : guns.gunName != null) return false;
-        if (ammoName != null ? !ammoName.equals(guns.ammoName) : guns.ammoName != null) return false;
-        if (nation != null ? !nation.equals(guns.nation) : guns.nation != null) return false;
-        if (ammoType != null ? !ammoType.equals(guns.ammoType) : guns.ammoType != null) return false;
-        if (barrelLenght != null ? !barrelLenght.equals(guns.barrelLenght) : guns.barrelLenght != null) return false;
-        if (caliber != null ? !caliber.equals(guns.caliber) : guns.caliber != null) return false;
-        if (muzzleVelocity != null ? !muzzleVelocity.equals(guns.muzzleVelocity) : guns.muzzleVelocity != null)
-            return false;
-        if (pen100 != null ? !pen100.equals(guns.pen100) : guns.pen100 != null) return false;
-        if (pen300 != null ? !pen300.equals(guns.pen300) : guns.pen300 != null) return false;
-        if (pen500 != null ? !pen500.equals(guns.pen500) : guns.pen500 != null) return false;
-        if (pen1000 != null ? !pen1000.equals(guns.pen1000) : guns.pen1000 != null) return false;
-        if (pen1500 != null ? !pen1500.equals(guns.pen1500) : guns.pen1500 != null) return false;
-        if (pen2000 != null ? !pen2000.equals(guns.pen2000) : guns.pen2000 != null) return false;
-        if (pen3000 != null ? !pen3000.equals(guns.pen3000) : guns.pen3000 != null) return false;
-
-        return true;
+    @OneToMany (mappedBy = "gun")
+    public Set<Vehicle> getVehicles() {
+        return vehicles;
     }
 
+    public void setVehicles(Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
+    }
     @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (gunName != null ? gunName.hashCode() : 0);
-        result = 31 * result + (ammoName != null ? ammoName.hashCode() : 0);
-        result = 31 * result + (nation != null ? nation.hashCode() : 0);
-        result = 31 * result + (ammoType != null ? ammoType.hashCode() : 0);
-        result = 31 * result + (barrelLenght != null ? barrelLenght.hashCode() : 0);
-        result = 31 * result + (caliber != null ? caliber.hashCode() : 0);
-        result = 31 * result + (muzzleVelocity != null ? muzzleVelocity.hashCode() : 0);
-        result = 31 * result + (pen100 != null ? pen100.hashCode() : 0);
-        result = 31 * result + (pen300 != null ? pen300.hashCode() : 0);
-        result = 31 * result + (pen500 != null ? pen500.hashCode() : 0);
-        result = 31 * result + (pen1000 != null ? pen1000.hashCode() : 0);
-        result = 31 * result + (pen1500 != null ? pen1500.hashCode() : 0);
-        result = 31 * result + (pen2000 != null ? pen2000.hashCode() : 0);
-        result = 31 * result + (pen3000 != null ? pen3000.hashCode() : 0);
-        return result;
+    public String toString(){
+        return this.getGunName()+" "+this.getAmmoType()+" "+this.getAmmoName();
     }
 }
