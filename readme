@@ -1,5 +1,1 @@
-0.File Structure
-docs - misc files used during project (sql,erd)
-sqlite - sqlite db folder
-1. Why I used separate FXML Views?
-https://stackoverflow.com/questions/19889882/javafx-tabpane-one-controller-for-each-tab
+

@@ -101,9 +101,8 @@
         </VBox>
         <VBox layoutX="385.0" layoutY="34.0">
             <children>
-                <TableView fx:id="TableView11" nodeOrientation="LEFT_TO_RIGHT">
+                <TableView fx:id="gTable" nodeOrientation="LEFT_TO_RIGHT">
                     <columns>
-                        <TableColumn fx:id="gIdColumn" maxWidth="-1.0" minWidth="50.0" prefWidth="-1.0" text="ID" />
                         <TableColumn fx:id="gNameColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Gun Name" />
                         <TableColumn fx:id="gAmmoNameColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Ammo Name" />
                         <TableColumn fx:id="gNationColumn" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="Nation" />

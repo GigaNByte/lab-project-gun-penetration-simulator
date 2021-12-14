@@ -11,56 +11,63 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 
 public class VehicleFormController implements Initializable {
-    @FXML
-    private TextField vFormName;
-    @FXML
-    private TextField vFormNation;
-    @FXML
-    private Spinner vFormFrontArmorThick;
-    @FXML
-    private Spinner vFormSideArmorThick;
-    @FXML
-    private Spinner vFormFrontArmorAngle;
-    @FXML
-    private Spinner vFormSideArmorAngle;
-    @FXML
-    private ChoiceBox vFormGun;
-    @FXML
-    private Text vFormErrorMessage;
-    @FXML
-    private SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
+    //form
+    @FXML private SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
+    @FXML private TextField vFormName;
+    @FXML private TextField vFormNation;
+    @FXML private Spinner vFormFrontArmorThick ;
+    @FXML private Spinner vFormSideArmorThick;
+    @FXML private Spinner vFormFrontArmorAngle;
+    @FXML private Spinner vFormSideArmorAngle;
+    @FXML private ChoiceBox vFormGun;
+    @FXML private Text vFormErrorMessage;
+    ObservableList<Gun> guns = FXCollections.observableArrayList();
+    //table
+    @FXML private ObservableList<Vehicle> vTableItems = FXCollections.observableArrayList();
+    @FXML private TableView<Vehicle> vTable ;
+    @FXML private TableColumn<Vehicle,String> vNameColumn;
+    @FXML private TableColumn<Vehicle,Gun> vGunColumn;
+    @FXML private TableColumn<Vehicle,String> vNationColumn;
+    @FXML private TableColumn<Vehicle,Integer> vFrontThickColumn;
+    @FXML private TableColumn<Vehicle,Integer> vFrontArmorAngleColumn;
+    @FXML private TableColumn<Vehicle,Integer> vSideThickColumn;
+    @FXML private TableColumn<Vehicle,Integer> vSideArmorAngleColumn;
+
+    public ObservableList<Vehicle> getvTableItems() {
+        return vTableItems;
+    }
+
+    public void setvTableItems(ObservableList<Vehicle> vTableItems) {
+        this.vTableItems = vTableItems;
+    }
 
     @FXML
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //test
-        Gun testGun2 = new Gun();
-        testGun2.setGunName("85mm/L52 (D-5T)");
-        testGun2.setAmmoName("BR-365K");
-        testGun2.setAmmoType("AP");
-        testGun2.setBarrelLenght(4420.);
-        testGun2.setCaliber(85.);
-        testGun2.setMuzzleVelocity(792);
-        testGun2.setNation("USSR");
-        testGun2.setPen100(127);
-        SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(testGun2);
-        session.getTransaction().commit();
-        session.close();
+        vNameColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("vehicleName"));
+        vNationColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, String>("nation"));
+        vGunColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Gun>("gun"));
+        vFrontThickColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("frontArmorThickness"));
+        vSideThickColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("sideArmorThickness"));
+        vFrontArmorAngleColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("frontArmorAngle"));
+        vSideArmorAngleColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("sideArmorAngle"));
+        vTable.setItems(vTableItems);
+        refresh();
+    }
 
-        ObservableList<Gun> guns = FXCollections.observableArrayList();
-        session = sessionFactory.openSession();
+    @FXML
+    public void refresh() {
+        //retrieves gun dropdown list
+
+        Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<Gun> all_guns = session.createQuery("FROM Gun").list();
         session.getTransaction().commit();
@@ -68,11 +75,7 @@ public class VehicleFormController implements Initializable {
         guns.addAll(all_guns);
         vFormGun.getItems().addAll(guns);
         vFormGun.getSelectionModel().selectFirst();
-    }
 
-    @FXML
-    public void refresh() {
-        this.initialize(null,null);
     }
     @FXML
     public void submitVehicleForm() {
@@ -90,6 +93,7 @@ public class VehicleFormController implements Initializable {
             //? Should i just cast it straight away ? is it type safe? Same for Integer/Double?
             newVehicle.setGun((Gun) vFormGun.getValue());
             newVehicle.setNation(vFormNation.getText());
+            newVehicle.setVehicleName(vFormName.getText());
             newVehicle.setFrontArmorThickness((Integer)vFormFrontArmorThick.getValue());
             newVehicle.setSideArmorThickness((Integer)vFormSideArmorThick.getValue());
             newVehicle.setFrontArmorAngle((Integer)vFormFrontArmorAngle.getValue());
@@ -104,6 +108,7 @@ public class VehicleFormController implements Initializable {
             vFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
             vFormErrorMessage.setText("Added gun successfully");
             vFormErrorMessage.setVisible(true);
+            vTableItems.add(newVehicle);
         }
 
     }

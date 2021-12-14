@@ -1,11 +1,11 @@
 package com.giga;
 
+import org.flywaydb.core.Flyway;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,12 +19,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("MainView"));
-        stage.setScene(scene);
-        stage.show();
         SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.close();
+
+        Flyway flyway = Flyway.configure().dataSource("jdbc:sqlite:sqlite/db/gps.db", null, null).baselineOnMigrate(true).load();
+        // Start the migration
+        flyway.migrate();
+
+        scene = new Scene(loadFXML("MainView"));
+        stage.setScene(scene);
+        stage.show();
+
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -32,7 +38,8 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        System.out.println(App.class.getResource("view/"+fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/"+fxml + ".fxml"));
 
         return fxmlLoader.load();
     }

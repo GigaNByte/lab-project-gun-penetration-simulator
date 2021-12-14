@@ -1,7 +1,7 @@
 package com.giga;
 
 import com.giga.model.Gun;
-import com.giga.model.SavedTest;
+import com.giga.model.FireTest;
 import com.giga.model.Vehicle;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -63,26 +63,26 @@ public class AppTest {
         Instant now = Instant.now();
         System.out.println(now);
         Timestamp current = Timestamp.from(now);
-
-        SavedTest testSavedTest = new SavedTest();
-        testSavedTest.setTestDate(current);
-        testSavedTest.setResult("Penetration");
-        testSavedTest.setShotAngle(0);
+    /*
+        FireTest testFireTest = new FireTest();
+        testFireTest.setTestDate(current);
+        testFireTest.setResult("Penetration");
+        testFireTest.setShotAngle(0);
 
         // should it be testVehicle ?
         // one test one vehicle many tests can have many (non-unique) vehicles
 
-        testSavedTest.setTargetVehicle(testVehicle);
-        testSavedTest.setVehicle(testVehicle);
+        testFireTest.setTargetVehicle(testVehicle);
+        testFireTest.setVehicle(testVehicle);
 
 
-        SavedTest testSavedTest2 = new SavedTest();
-        testSavedTest2.setTestDate(current);
-        testSavedTest2.setResult("Penetration");
-        testSavedTest2.setShotAngle(10);
-        testSavedTest2.setTargetVehicle(testVehicle);
-        testSavedTest2.setVehicle(testVehicle2);
-
+        FireTest testFireTest2 = new FireTest();
+        testFireTest2.setTestDate(current);
+        testFireTest2.setResult("Penetration");
+        testFireTest2.setShotAngle(10);
+        testFireTest2.setTargetVehicle(testVehicle);
+        testFireTest2.setVehicle(testVehicle2);
+*/
 
 
         SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
@@ -102,18 +102,18 @@ public class AppTest {
         /*
         session.persist(testVehicle);
         session.persist(testVehicle2);
-        session.persist(testSavedTest2);
-        session.persist(testSavedTest);
+        session.persist(testFireTest2);
+        session.persist(testFireTest);
 
         //count default entries
 
 
-        Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM SavedTest").getSingleResult());
+        Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM FireTest").getSingleResult());
         Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM Vehicle ").getSingleResult());
         Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM Gun").getSingleResult());
 
 
-        SavedTest result = (SavedTest) session.createQuery("FROM SavedTest").setMaxResults(1).getSingleResult();
+        FireTest result = (FireTest) session.createQuery("FROM FireTest").setMaxResults(1).getSingleResult();
 
 
         //propagate deleting of single vehicle without gun entity
@@ -123,7 +123,7 @@ public class AppTest {
         Assert.assertEquals(1L, session.createQuery("SELECT COUNT(*) FROM Vehicle ").getSingleResult());
         Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM Gun").getSingleResult());
         //TODO:"DELETE FROM vehicles ..." should delete all saved tests associated with deleted testVehicle
-       // Assert.assertEquals(0L, session.createQuery("SELECT COUNT(*) FROM SavedTest").getSingleResult());
+       // Assert.assertEquals(0L, session.createQuery("SELECT COUNT(*) FROM FireTest").getSingleResult());
 
         session.close();
 */

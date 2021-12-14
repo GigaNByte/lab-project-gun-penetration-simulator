@@ -63,10 +63,10 @@
                             <children>
                                 <TextField fx:id="vFormName" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
                                 <TextField fx:id="vFormNation" layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
-                                <Spinner fx:id="vFormFrontArmorThick" editable="true" minHeight="-Infinity" prefHeight="20.0" />
-                                <Spinner fx:id="vFormSideArmorThick" editable="true" layoutX="10.0" layoutY="90.0" minHeight="-Infinity" prefHeight="20.0" />
-                                <Spinner fx:id="vFormFrontArmorAngle" editable="true" layoutX="10.0" layoutY="136.0" minHeight="-Infinity" prefHeight="20.0" />
-                                <Spinner fx:id="vFormSideArmorAngle" editable="true" layoutX="10.0" layoutY="136.0" minHeight="-Infinity" prefHeight="20.0" />
+                                <Spinner fx:id="vFormFrontArmorThick" editable="true" minHeight="-Infinity" prefHeight="20.0"  max="1000" initialValue="0" />
+                                <Spinner fx:id="vFormSideArmorThick" editable="true" layoutX="10.0" layoutY="90.0" minHeight="-Infinity" prefHeight="20.0" min="0" max="1000" initialValue="0" />
+                                <Spinner fx:id="vFormFrontArmorAngle" editable="true" layoutX="10.0" layoutY="136.0" minHeight="-Infinity" prefHeight="20.0" min="0" max="180" initialValue="0" />
+                                <Spinner fx:id="vFormSideArmorAngle" editable="true" layoutX="10.0" layoutY="136.0" minHeight="-Infinity" prefHeight="20.0" min="0" max="180" initialValue="0"/>
                                 <ChoiceBox fx:id="vFormGun" maxHeight="20.0" minHeight="-Infinity" prefHeight="20.0" prefWidth="150.0" />
                             </children>
                         </VBox>
@@ -99,16 +99,15 @@
         </VBox>
         <VBox layoutX="385.0" layoutY="34.0">
             <children>
-                <TableView fx:id="TableView12" nodeOrientation="LEFT_TO_RIGHT">
+                <TableView fx:id="vTable" nodeOrientation="LEFT_TO_RIGHT">
                     <columns>
-                        <TableColumn fx:id="vColumnId" maxWidth="-1.0" minWidth="50.0" prefWidth="-1.0" text="ID" />
-                        <TableColumn fx:id="vColumnName" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Vehicle Name" />
-                        <TableColumn fx:id="vColumnGun" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Gun " />
-                        <TableColumn fx:id="vColumnNation" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="Nation" />
-                        <TableColumn fx:id="vColumnFrontThick" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Front Armor Thick." />
-                        <TableColumn fx:id="vColumnSideArmorAngle" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Side Armor Angle" />
-                        <TableColumn fx:id="vColumnFrontThick" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Front Armor Thick." />
-                        <TableColumn fx:id="vColumnSideArmorAngle" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Side Armor Angle" />
+                        <TableColumn fx:id="vNameColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Vehicle Name" />
+                        <TableColumn fx:id="vGunColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Gun " />
+                        <TableColumn fx:id="vNationColumn" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="Nation" />
+                        <TableColumn fx:id="vFrontThickColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Front Armor Thick." />
+                        <TableColumn fx:id="vFrontArmorAngleColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Front Armor Angle" />
+                        <TableColumn fx:id="vSideThickColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Side Armor Thick." />
+                        <TableColumn fx:id="vSideArmorAngleColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Side Armor Angle" />
                     </columns>
                 </TableView>
             </children>

@@ -5,19 +5,47 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Entity
-@Table(name="saved_tests")
-public class SavedTest {
+@Table(name="fire_tests")
+public class FireTest {
+
+
+
+    //technicaly enums should be side hull,front hull etc.
+    public enum  VehiclePart{
+        FRONT_ARMOR("Front Hull"),
+        SIDE_ARMOR("Side Hull");
+
+        private final String text;
+
+        VehiclePart(final String text) {
+            this.text = text;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
+
+    public enum  TestResult{
+        PENETRATION,
+        NO_PENETRATION,
+    }
+
     private Integer id;
-    private Integer vehicleId;
+    private String testName;
     private Timestamp testDate;
     private Integer shotAngle;
-    private String result;
+    private Integer shotDistance;
     private Vehicle vehicle;
     private Vehicle targetVehicle;
+    private TestResult result;
+    private VehiclePart targetVehiclePart;
+
+
     @Id
     @GeneratedValue
     @Column(name = "id", nullable = false)
@@ -52,6 +80,16 @@ public class SavedTest {
     }
 
     @Basic
+    @Column(name = "test_name")
+    public String getTestName() {
+        return testName;
+    }
+
+    public void setTestName(String testName) {
+        this.testName = testName;
+    }
+
+    @Basic
     @Column(name = "test_date", nullable = false)
     public Timestamp getTestDate() {
         return testDate;
@@ -70,15 +108,32 @@ public class SavedTest {
     public void setShotAngle(Integer shotAngle) {
         this.shotAngle = shotAngle;
     }
-
-    @Basic
-    @Column(name = "result", nullable = false, length = 45)
-    public String getResult() {
-        return result;
+    @Column(name="shotDistance", nullable = false)
+    public Integer getShotDistance() {
+        return shotDistance;
     }
 
-    public void setResult(String result) {
+    public void setShotDistance(Integer shotDistance) {
+        this.shotDistance = shotDistance;
+    }
+
+    public TestResult getResult() {
+        return result;
+    }
+    @Enumerated(EnumType.STRING)
+    @Column(name="result", nullable = false)
+    public void setResult(TestResult result) {
         this.result = result;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="targetVehiclePart", nullable = false)
+    public VehiclePart getTargetVehiclePart() {
+        return targetVehiclePart;
+    }
+
+    public void setTargetVehiclePart(VehiclePart targetVehiclePart) {
+        this.targetVehiclePart = targetVehiclePart;
     }
 
 }

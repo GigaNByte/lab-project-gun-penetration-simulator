@@ -15,8 +15,8 @@ public class Vehicle {
     private Integer frontArmorAngle;
     private Integer sideArmorAngle;
     private Gun gun;
-    private Set<SavedTest> saved_tests_vehicle = new HashSet<>();
-    private Set<SavedTest> saved_tests_target_vehicle = new HashSet<>();
+    private Set<FireTest> saved_tests_vehicle = new HashSet<>();
+    private Set<FireTest> saved_tests_target_vehicle = new HashSet<>();
 
 
 
@@ -32,20 +32,20 @@ public class Vehicle {
     }
 
     @OneToMany(mappedBy = "vehicle")
-    public Set<SavedTest> getSaved_tests_vehicle() {
+    public Set<FireTest> getSaved_tests_vehicle() {
         return saved_tests_vehicle;
     }
 
-    public void setSaved_tests_vehicle(Set<SavedTest> saved_tests_vehicle) {
+    public void setSaved_tests_vehicle(Set<FireTest> saved_tests_vehicle) {
         this.saved_tests_vehicle = saved_tests_vehicle;
     }
 
     @OneToMany(mappedBy = "targetVehicle")
-    public Set<SavedTest> getSaved_tests_target_vehicle() {
+    public Set<FireTest> getSaved_tests_target_vehicle() {
         return saved_tests_target_vehicle;
     }
 
-    public void setSaved_tests_target_vehicle(Set<SavedTest> saved_tests_target_vehicle) {
+    public void setSaved_tests_target_vehicle(Set<FireTest> saved_tests_target_vehicle) {
         this.saved_tests_target_vehicle = saved_tests_target_vehicle;
     }
 
@@ -119,6 +119,10 @@ public class Vehicle {
         this.gun = gun;
     }
 
+    @Override
+    public String toString(){
+        return this.getVehicleName();
+    }
 
 
 }

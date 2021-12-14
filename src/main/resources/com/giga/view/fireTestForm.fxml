@@ -12,6 +12,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.giga.controllers.FireTestFormController">
     <children>
         <VBox layoutX="26.0" layoutY="34.0">
@@ -20,22 +22,32 @@
                     <children>
                         <VBox spacing="20.0">
                             <children>
-                                <Label text="Test Name">
+                                <Label text="Title">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="10.0" layoutY="220.0" text="Gun">
+                                <Label text="Test vehicle">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Label text="Armor angle">
+                                <Label  text="Target vehicle">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
                                 </Label>
-                                <Label text="Armor Thickness">
+                                <Label text="Target vehicle part">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label text="Shot angle">
+                                    <font>
+                                        <Font size="14.0" />
+                                    </font>
+                                </Label>
+                                <Label text="Shot distance">
                                     <font>
                                         <Font size="14.0" />
                                     </font>
@@ -45,9 +57,11 @@
                         <VBox spacing="20.0">
                             <children>
                                 <TextField fx:id="ftFormName" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
-                                <ChoiceBox fx:id="ftFormGun" maxHeight="20.0" minHeight="-Infinity" prefHeight="20.0" prefWidth="150.0" />
-                                <Spinner fx:id="ftArmorAngle" minHeight="-Infinity" prefHeight="20.0" />
-                                <Spinner fx:id="ftArmorThickness" minHeight="-Infinity" prefHeight="20.0" />
+                                <ChoiceBox fx:id="ftFormVehicle" maxHeight="20.0" minHeight="-Infinity" prefHeight="20.0" prefWidth="150.0" />
+                                <ChoiceBox fx:id="ftFormTargetVehicle" maxHeight="20.0" minHeight="-Infinity" prefHeight="20.0" prefWidth="150.0" />
+                                <ChoiceBox fx:id="ftFormTargetVehiclePart" maxHeight="20.0" minHeight="-Infinity" prefHeight="20.0" prefWidth="150.0" />
+                                <Spinner fx:id="ftFormShotAngle"  editable="true" minHeight="-Infinity" prefHeight="20.0"  min="0" max="180" initialValue="0" />
+                                <Spinner fx:id="ftFormShotDistance"  editable="true" minHeight="-Infinity" prefHeight="20.0" min="0" max="3000" initialValue="0" />
                             </children>
                         </VBox>
                     </children>
@@ -57,7 +71,7 @@
                 </HBox>
             <HBox alignment="CENTER" prefHeight="11.0" prefWidth="318.0">
                <children>
-                  <Text  fx:id="tFormErrorMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Some fields are missing" visible="false">
+                  <Text  fx:id="ftFormErrorMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Some fields are missing" visible="false">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -75,7 +89,22 @@
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="385.0" layoutY="34.0" />
+        <VBox layoutX="385.0" layoutY="34.0">
+            <children>
+                <TableView fx:id="ftTable" nodeOrientation="LEFT_TO_RIGHT">
+                    <columns>
+                        <TableColumn fx:id="ftNameColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Title" />
+                        <TableColumn fx:id="ftResultColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Result" />
+                        <TableColumn fx:id="ftVehicleColumn" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" text="Vehicle" />
+                        <TableColumn fx:id="ftTargetVehicleColumn" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" text="Target Vehicle" />
+                        <TableColumn fx:id="ftTargetVehiclePartColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Targeted Part" />
+                        <TableColumn fx:id="ftShotDistanceColumn" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="Distance" />
+                        <TableColumn fx:id="ftShotAngleColumn" maxWidth="-1.0" minWidth="50.0" prefWidth="-1.0" text="Angle" />
+                        <TableColumn fx:id="ftTestDate" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Date" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

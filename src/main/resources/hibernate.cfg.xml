@@ -17,6 +17,6 @@
 
         <mapping class="com.giga.model.Gun"/>
         <mapping class="com.giga.model.Vehicle"/>
-        <mapping class="com.giga.model.SavedTest"/>
+        <mapping class="com.giga.model.FireTest"/>
     </session-factory>
 </hibernate-configuration>
