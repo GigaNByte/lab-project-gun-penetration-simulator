@@ -13,6 +13,7 @@ import org.junit.Assert;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,7 +22,8 @@ import java.util.Set;
 public class AppTest {
 
     @Test
-    public void app_insert_delete_test() {
+    public void app_delete_propragation() {
+        //add gun and vehicle and assign them to two fire tests
         Gun testGun = new Gun();
         testGun.setGunName("76.2mm/L30.5 (L-11)");
         testGun.setAmmoName("BR-350A");
@@ -60,72 +62,68 @@ public class AppTest {
         testVehicle2.setSideArmorAngle(40);
         testVehicle2.setGun(testGun2);
 
-        Instant now = Instant.now();
-        System.out.println(now);
-        Timestamp current = Timestamp.from(now);
-    /*
+        Date date = new Date();
         FireTest testFireTest = new FireTest();
-        testFireTest.setTestDate(current);
-        testFireTest.setResult("Penetration");
+        testFireTest.setTestName("test1");
+        testFireTest.setResult(FireTest.TestResult.PENETRATION);
         testFireTest.setShotAngle(0);
-
-        // should it be testVehicle ?
-        // one test one vehicle many tests can have many (non-unique) vehicles
-
+        testFireTest.setShotDistance(10);
         testFireTest.setTargetVehicle(testVehicle);
-        testFireTest.setVehicle(testVehicle);
-
+        testFireTest.setVehicle(testVehicle2);
+        testFireTest.setTargetVehiclePart(FireTest.VehiclePart.FRONT_ARMOR);
+        testFireTest.setTestDate(date);
 
         FireTest testFireTest2 = new FireTest();
-        testFireTest2.setTestDate(current);
-        testFireTest2.setResult("Penetration");
+        testFireTest2.setTestName("test2");
+        testFireTest2.setResult(FireTest.TestResult.PENETRATION);
         testFireTest2.setShotAngle(10);
-        testFireTest2.setTargetVehicle(testVehicle);
-        testFireTest2.setVehicle(testVehicle2);
-*/
+        testFireTest2.setShotDistance(10);
+        testFireTest2.setTargetVehicle(testVehicle2);
+        testFireTest2.setVehicle(testVehicle);
+        testFireTest2.setTargetVehiclePart(FireTest.VehiclePart.FRONT_ARMOR);
+        testFireTest2.setTestDate(date);
 
 
         SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
+        sessionFactory = HibernateConnection.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.save(testGun);
-        session.save(testGun2);
-        session.getTransaction().commit();
-        session.close();
-
-        sessionFactory = HibernateConnection.getSessionFactory();
-        session = sessionFactory.openSession();
-        session.beginTransaction();
-        Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM Gun").getSingleResult());
-        session.getTransaction().commit();
-        session.close();
-        /*
+        session.persist(testGun2);
+        session.persist(testGun);
         session.persist(testVehicle);
         session.persist(testVehicle2);
         session.persist(testFireTest2);
         session.persist(testFireTest);
+        session.getTransaction().commit();
+        session.close();
 
-        //count default entries
-
-
-        Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM FireTest").getSingleResult());
-        Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM Vehicle ").getSingleResult());
+        session = sessionFactory.openSession();
+        session.beginTransaction();
         Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM Gun").getSingleResult());
+        Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM Vehicle").getSingleResult());
+        Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM FireTest").getSingleResult());
+        session.getTransaction().commit();
+        session.close();
 
-
-        FireTest result = (FireTest) session.createQuery("FROM FireTest").setMaxResults(1).getSingleResult();
-
-
-        //propagate deleting of single vehicle without gun entity
-
+        session = sessionFactory.openSession();
+        session.beginTransaction();
         session.remove(testVehicle);
+        session.getTransaction().commit();
+        session.close();
 
+
+        //Vehicle "testVehicle" was deleted
+        //testVehicle was assigned to firetest2 and firetest
+        //after deleting "testVehicle", table FireTest should contain no records
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
         Assert.assertEquals(1L, session.createQuery("SELECT COUNT(*) FROM Vehicle ").getSingleResult());
         Assert.assertEquals(2L, session.createQuery("SELECT COUNT(*) FROM Gun").getSingleResult());
-        //TODO:"DELETE FROM vehicles ..." should delete all saved tests associated with deleted testVehicle
-       // Assert.assertEquals(0L, session.createQuery("SELECT COUNT(*) FROM FireTest").getSingleResult());
-
+        Assert.assertEquals(0L, session.createQuery("SELECT COUNT(*) FROM FireTest").getSingleResult());
+        session.remove(testVehicle);
+        session.getTransaction().commit();
         session.close();
-*/
+
     }
 }

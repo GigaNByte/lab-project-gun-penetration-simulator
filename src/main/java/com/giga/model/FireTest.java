@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.sql.Timestamp;
 
 
@@ -37,7 +38,7 @@ public class FireTest {
 
     private Integer id;
     private String testName;
-    private Timestamp testDate;
+    private Date testDate;
     private Integer shotAngle;
     private Integer shotDistance;
     private Vehicle vehicle;
@@ -79,7 +80,7 @@ public class FireTest {
         this.targetVehicle = targetVehicle;
     }
 
-    @Basic
+    @Basic(optional = false)
     @Column(name = "test_name")
     public String getTestName() {
         return testName;
@@ -91,11 +92,12 @@ public class FireTest {
 
     @Basic
     @Column(name = "test_date", nullable = false)
-    public Timestamp getTestDate() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getTestDate() {
         return testDate;
     }
 
-    public void setTestDate(Timestamp testDate) {
+    public void setTestDate(Date testDate) {
         this.testDate = testDate;
     }
 

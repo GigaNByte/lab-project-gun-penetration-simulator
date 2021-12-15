@@ -23,7 +23,7 @@ public class App extends Application {
         Session session = sessionFactory.openSession();
         session.close();
 
-        Flyway flyway = Flyway.configure().dataSource("jdbc:sqlite:sqlite/db/gps.db", null, null).baselineOnMigrate(true).load();
+        Flyway flyway = Flyway.configure().dataSource("jdbc:sqlite:sqlite/db/gps.db", null, null).locations("db/migration/V1__guns.sql").baselineOnMigrate(true).load();
         // Start the migration
         flyway.migrate();
 

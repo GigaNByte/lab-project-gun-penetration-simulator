@@ -1,3 +1,4 @@
+BEGIN;
 INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_name","muzzle_velocity","nation","pen_100","pen_1000","pen_1500","pen_2000","pen_300","pen_3000","pen_500") VALUES (1,'Pzgr. 39/1','APCBC',71.0,88.0,'88mm/L71 KwK 43',6248,'German',1000,222,185,167,150,214,115);
 INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_name","muzzle_velocity","nation","pen_100","pen_1000","pen_1500","pen_2000","pen_300","pen_3000","pen_500") VALUES (2,'Pzgr. 39 FES','APCBC',56.0,88.0,'88mm/L56 KwK 36',4928,'German',780,148,121,109,98,142,75);
 INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_name","muzzle_velocity","nation","pen_100","pen_1000","pen_1500","pen_2000","pen_300","pen_3000","pen_500") VALUES (3,'Pzgr. Patr.','AP',56.0,88.0,'88mm/L56 Flak 36',4928,'German',810,127,111,101,91,123,72);
@@ -65,4 +66,4 @@ INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_
 INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_name","muzzle_velocity","nation","pen_100","pen_1000","pen_1500","pen_2000","pen_300","pen_3000","pen_500") VALUES (65,'BR-412','AP','53,5',100.0,'100mm/L53.5 (D-10T)',5350,'Soviet',895,177,140,122,105,168,76);
 INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_name","muzzle_velocity","nation","pen_100","pen_1000","pen_1500","pen_2000","pen_300","pen_3000","pen_500") VALUES (66,'BR-412B','APBC','53,5',100.0,'100mm/L53.5 (D-10T)',5350,'Soviet',895,178,156,142,130,173,108);
 INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_name","muzzle_velocity","nation","pen_100","pen_1000","pen_1500","pen_2000","pen_300","pen_3000","pen_500") VALUES (67,'BR-412D','APBC','53,5',100.0,'100mm/L53.5 (D-10T)',5350,'Soviet',887,204,182,169,156,199,131);
-COMMIT;
+END;

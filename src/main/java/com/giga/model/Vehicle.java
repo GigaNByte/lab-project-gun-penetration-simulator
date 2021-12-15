@@ -1,5 +1,8 @@
 package com.giga.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -31,7 +34,8 @@ public class Vehicle {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "vehicle")
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Set<FireTest> getSaved_tests_vehicle() {
         return saved_tests_vehicle;
     }
@@ -40,7 +44,8 @@ public class Vehicle {
         this.saved_tests_vehicle = saved_tests_vehicle;
     }
 
-    @OneToMany(mappedBy = "targetVehicle")
+    @OneToMany(mappedBy = "targetVehicle",cascade = CascadeType.REMOVE)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Set<FireTest> getSaved_tests_target_vehicle() {
         return saved_tests_target_vehicle;
     }
