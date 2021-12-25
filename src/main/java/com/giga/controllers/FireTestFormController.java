@@ -2,6 +2,7 @@ package com.giga.controllers;
 
 
 import com.giga.HibernateConnection;
+import com.giga.model.Context;
 import com.giga.model.FireTest;
 import com.giga.model.Gun;
 import com.giga.model.Vehicle;
@@ -31,7 +32,7 @@ public class FireTestFormController implements Initializable {
     @FXML private Spinner ftFormShotDistance;
     @FXML private Text ftFormErrorMessage;
     //table
-    @FXML private ObservableList<FireTest> ftTableItems = FXCollections.observableArrayList();
+
     @FXML private TableView<FireTest> ftTable ;
     @FXML private TableColumn<FireTest,String> ftNameColumn;
     @FXML private TableColumn<FireTest,Vehicle> ftVehicleColumn;
@@ -39,7 +40,6 @@ public class FireTestFormController implements Initializable {
     @FXML private TableColumn<FireTest, FireTest.VehiclePart> ftTargetVehiclePartColumn;
     @FXML private TableColumn<FireTest,Integer> ftShotAngleColumn;
     @FXML private TableColumn<FireTest,Integer> ftShotDistanceColumn;
-    ObservableList<Vehicle> vehicles = FXCollections.observableArrayList();
 
     @FXML
     @Override
@@ -50,31 +50,23 @@ public class FireTestFormController implements Initializable {
         ftTargetVehiclePartColumn.setCellValueFactory(new PropertyValueFactory<FireTest, FireTest.VehiclePart>("targetVehiclePart"));
         ftShotAngleColumn.setCellValueFactory(new PropertyValueFactory<FireTest, Integer>("shotAngle"));
         ftShotDistanceColumn.setCellValueFactory(new PropertyValueFactory<FireTest, Integer>("shotDistance"));
-        List<FireTest.VehiclePart> allVehicleParts = Arrays.asList(FireTest.VehiclePart.class.getEnumConstants());
 
-        ftFormTargetVehiclePart.getItems().addAll(allVehicleParts);
+        List<FireTest.VehiclePart> allVehicleParts = Arrays.asList(FireTest.VehiclePart.class.getEnumConstants());
+        ftFormTargetVehiclePart.getItems().setAll(allVehicleParts);
         ftFormTargetVehiclePart.getSelectionModel().selectFirst();
 
-        ftTable.setItems(ftTableItems);
+        ftTable.setItems(Context.getInstance().getFireTestTable());
+
         refresh();
     }
     @FXML
     public void refresh() {
         //retrieves gun dropdown list
-
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List<Vehicle> allVehicles = session.createQuery("FROM Vehicle").list();
-        session.getTransaction().commit();
-        session.close();
-        vehicles.addAll(allVehicles);
-        ftFormTargetVehicle.getItems().addAll(vehicles);
+        ObservableList<Vehicle> vehicles = Context.getInstance().getVehicleTable();
+        ftFormTargetVehicle.getItems().setAll(vehicles);
         ftFormTargetVehicle.getSelectionModel().selectFirst();
-        ftFormVehicle.getItems().addAll(vehicles);
+        ftFormVehicle.getItems().setAll(vehicles);
         ftFormVehicle.getSelectionModel().selectFirst();
-
-
-
     }
 
     @FXML
@@ -90,19 +82,36 @@ public class FireTestFormController implements Initializable {
             ftFormErrorMessage.setStyle("-fx-text-inner-color: red;");
             ftFormErrorMessage.setVisible(true);
         }else{
-            FireTest newFireTest = new FireTest();
-            newFireTest.setResult(FireTest.TestResult.PENETRATION);
-            newFireTest.setTestName(ftFormName.getText());
-            newFireTest.setShotAngle((Integer)ftFormShotAngle.getValue());
-            newFireTest.setShotDistance((Integer)ftFormShotDistance.getValue());
-            newFireTest.setVehicle((Vehicle) ftFormVehicle.getValue());
-            newFireTest.setTargetVehicle((Vehicle) ftFormTargetVehicle.getValue());
-            newFireTest.setTargetVehiclePart((FireTest.VehiclePart) ftFormTargetVehiclePart.getValue());
+            try{
+                //TODO: create Firetest Creator/pseudo constructor and replace code below
+                FireTest newFireTest = new FireTest();
+                newFireTest.setResult(FireTest.TestResult.PENETRATION);
+                newFireTest.setTestName(ftFormName.getText());
+                newFireTest.setShotAngle((Integer)ftFormShotAngle.getValue());
+                newFireTest.setShotDistance((Integer)ftFormShotDistance.getValue());
+                newFireTest.setVehicle((Vehicle) ftFormVehicle.getValue());
+                newFireTest.setTargetVehicle((Vehicle) ftFormTargetVehicle.getValue());
+                newFireTest.setTargetVehiclePart((FireTest.VehiclePart) ftFormTargetVehiclePart.getValue());
 
-            ftFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
-            ftFormErrorMessage.setText("Added gun successfully");
-            ftFormErrorMessage.setVisible(true);
-            ftTableItems.add(newFireTest);
+                //TODO: replace code below as  addVehicle method in Context
+                Session session = sessionFactory.openSession();
+                session.beginTransaction();
+                session.persist(newFireTest);
+                session.getTransaction().commit();
+                session.close();
+                ftTable.setItems(Context.getInstance().getFireTestTable());
+
+                ftFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
+                ftFormErrorMessage.setText("Added fire test successfully");
+                ftFormErrorMessage.setVisible(true);
+
+
+            }catch (Exception e){
+                System.out.println(e);
+                ftFormErrorMessage.setStyle("-fx-text-inner-color: red;-fx-text-fill: red;");
+                ftFormErrorMessage.setText("Error at adding fire test");
+                ftFormErrorMessage.setVisible(true);
+            }
         }
     }
 

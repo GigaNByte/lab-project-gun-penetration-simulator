@@ -48,7 +48,7 @@ public class FireTest {
 
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;
@@ -90,8 +90,9 @@ public class FireTest {
         this.testName = testName;
     }
 
+    //TODO:Implement Timestampable.java: https://stackoverflow.com/questions/8202154/how-to-create-an-auto-generated-date-timestamp-field-in-a-play-jpa
     @Basic
-    @Column(name = "test_date", nullable = false)
+    @Column(name = "test_date")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getTestDate() {
         return testDate;

@@ -19,13 +19,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
         SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.close();
 
-        Flyway flyway = Flyway.configure().dataSource("jdbc:sqlite:sqlite/db/gps.db", null, null).locations("db/migration/V1__guns.sql").baselineOnMigrate(true).load();
+        Flyway flyway = Flyway.configure().dataSource("jdbc:sqlite:sqlite/db/gps.db", null, null).baselineOnMigrate(true).load();
         // Start the migration
         flyway.migrate();
+
+
+
+
 
         scene = new Scene(loadFXML("MainView"));
         stage.setScene(scene);

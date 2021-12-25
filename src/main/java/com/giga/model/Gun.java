@@ -24,7 +24,7 @@ public class Gun {
     private Set<Vehicle> vehicles;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     public Integer getId() {
         return id;

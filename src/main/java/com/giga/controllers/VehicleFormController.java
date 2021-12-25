@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.giga.HibernateConnection;
+import com.giga.model.Context;
 import com.giga.model.Gun;
 import com.giga.model.Vehicle;
 import javafx.collections.FXCollections;
@@ -31,7 +32,6 @@ public class VehicleFormController implements Initializable {
     @FXML private Text vFormErrorMessage;
     ObservableList<Gun> guns = FXCollections.observableArrayList();
     //table
-    @FXML private ObservableList<Vehicle> vTableItems = FXCollections.observableArrayList();
     @FXML private TableView<Vehicle> vTable ;
     @FXML private TableColumn<Vehicle,String> vNameColumn;
     @FXML private TableColumn<Vehicle,Gun> vGunColumn;
@@ -41,13 +41,7 @@ public class VehicleFormController implements Initializable {
     @FXML private TableColumn<Vehicle,Integer> vSideThickColumn;
     @FXML private TableColumn<Vehicle,Integer> vSideArmorAngleColumn;
 
-    public ObservableList<Vehicle> getvTableItems() {
-        return vTableItems;
-    }
 
-    public void setvTableItems(ObservableList<Vehicle> vTableItems) {
-        this.vTableItems = vTableItems;
-    }
 
     @FXML
     @Override
@@ -59,22 +53,18 @@ public class VehicleFormController implements Initializable {
         vSideThickColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("sideArmorThickness"));
         vFrontArmorAngleColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("frontArmorAngle"));
         vSideArmorAngleColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("sideArmorAngle"));
-        vTable.setItems(vTableItems);
+        vTable.setItems(Context.getInstance().getVehicleTable());
+
+        //retrieves gun dropdown list
+        vFormGun.setItems(Context.getInstance().getGunTable());
+        vFormGun.getSelectionModel().selectFirst();
+
         refresh();
     }
 
     @FXML
     public void refresh() {
-        //retrieves gun dropdown list
 
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List<Gun> all_guns = session.createQuery("FROM Gun").list();
-        session.getTransaction().commit();
-        session.close();
-        guns.addAll(all_guns);
-        vFormGun.getItems().addAll(guns);
-        vFormGun.getSelectionModel().selectFirst();
 
     }
     @FXML
@@ -89,7 +79,7 @@ public class VehicleFormController implements Initializable {
             vFormErrorMessage.setVisible(true);
         } else {
             // code below should belong to DAO class
-            Vehicle newVehicle= new Vehicle();
+            Vehicle newVehicle = new Vehicle();
             //? Should i just cast it straight away ? is it type safe? Same for Integer/Double?
             newVehicle.setGun((Gun) vFormGun.getValue());
             newVehicle.setNation(vFormNation.getText());
@@ -99,16 +89,24 @@ public class VehicleFormController implements Initializable {
             newVehicle.setFrontArmorAngle((Integer)vFormFrontArmorAngle.getValue());
             newVehicle.setSideArmorAngle((Integer)vFormSideArmorAngle.getValue());
 
-            Session session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.persist(newVehicle);
-            session.getTransaction().commit();
-            session.close();
-            //Color does not work
-            vFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
-            vFormErrorMessage.setText("Added gun successfully");
-            vFormErrorMessage.setVisible(true);
-            vTableItems.add(newVehicle);
+            try {
+                //TODO: replace code below as  addVehicle method in Context
+                Session session = sessionFactory.openSession();
+                session.beginTransaction();
+                session.persist(newVehicle);
+                session.getTransaction().commit();
+                session.close();
+                vTable.setItems(Context.getInstance().getVehicleTable());
+                //TODO:Color does not work
+                vFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
+                vFormErrorMessage.setText("Added gun successfully");
+                vFormErrorMessage.setVisible(true);
+
+            }catch (Exception e){
+                vFormErrorMessage.setStyle("-fx-text-inner-color: red;-fx-text-fill: red;");
+                vFormErrorMessage.setText("Error at adding vehicle");
+                vFormErrorMessage.setVisible(true);
+            }
         }
 
     }

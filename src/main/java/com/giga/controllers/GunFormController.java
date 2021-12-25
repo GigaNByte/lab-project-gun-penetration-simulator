@@ -2,10 +2,12 @@ package com.giga.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.giga.App;
 import com.giga.HibernateConnection;
+import com.giga.model.Context;
 import com.giga.model.Gun;
 import com.giga.model.Vehicle;
 import javafx.collections.FXCollections;
@@ -39,7 +41,6 @@ public class GunFormController implements Initializable {
     @FXML private TextField gFormBarrelLenght;
     @FXML private Text gFormErrorMessage;
     @FXML private TextField gFormMuzzleVelocity;
-    @FXML private ObservableList<Gun> gTableItems = FXCollections.observableArrayList();
     @FXML private TableView<Gun> gTable ;
     @FXML private TableColumn gNameColumn;
     @FXML private TableColumn gAmmoNameColumn;
@@ -49,15 +50,8 @@ public class GunFormController implements Initializable {
     @FXML private TableColumn gBarrelLenghtColumn;
     @FXML private TableColumn gMuzzleVelocityColumn;
 
-    @FXML
-    public ObservableList<Gun> getgTableItems() {
-        return gTableItems;
-    }
 
-    @FXML
-    public void setgTableItems(ObservableList<Gun> gTableItems) {
-        this.gTableItems = gTableItems;
-    }
+
 
     @FXML
     @Override
@@ -69,7 +63,8 @@ public class GunFormController implements Initializable {
         gCaliberColumn.setCellValueFactory(new PropertyValueFactory<Gun, Double>("caliber"));
         gBarrelLenghtColumn.setCellValueFactory(new PropertyValueFactory<Gun, Double>("barrelLenght"));
         gMuzzleVelocityColumn.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("muzzleVelocity"));
-        gTable.setItems(gTableItems);
+        gTable.setItems(Context.getInstance().getGunTable());
+        //retrieves gun dropdown list
     }
 
     public void refresh(URL location, ResourceBundle resources) {
@@ -92,17 +87,22 @@ public class GunFormController implements Initializable {
             newGun.setMuzzleVelocity(Integer.parseInt(gFormMuzzleVelocity.getText()));
             newGun.setCaliber(Double.parseDouble(gFormCalliber.getText()));
 
-
-            Session session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.persist(newGun);
-            session.getTransaction().commit();
-            session.close();
-
-            gFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
-            gFormErrorMessage.setText("Added gun successfully");
-            gFormErrorMessage.setVisible(true);
-            gTableItems.add(newGun);
+            try{
+                //TODO: replace code below as  addVehicle method in Context
+                Session session = sessionFactory.openSession();
+                session.beginTransaction();
+                session.persist(newGun);
+                session.getTransaction().commit();
+                session.close();
+                gFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
+                gFormErrorMessage.setText("Added gun successfully");
+                gFormErrorMessage.setVisible(true);
+                gTable.setItems(Context.getInstance().getGunTable());
+            }catch (Exception e){
+                gFormErrorMessage.setStyle("-fx-text-inner-color: red;-fx-text-fill: red;");
+                gFormErrorMessage.setText("Error at adding gun");
+                gFormErrorMessage.setVisible(true);
+            }
 
         }
 
