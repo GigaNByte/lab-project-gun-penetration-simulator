@@ -4,11 +4,11 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.giga.controllers.MainController">
+<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" >
    <children>
-      <TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+      <TabPane fx:id="MainTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <tabs>
-            <Tab onSelectionChanged="#fireTestTabChanged" text="Fire Test">
+            <Tab fx:id="tab" onSelectionChanged="#fireTestTabChanged" text="Fire Test">
                <content>
                   <fx:include fx:id="FireTestForm" source="fireTestForm.fxml" />
                </content>

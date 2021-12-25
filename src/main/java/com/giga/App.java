@@ -1,5 +1,6 @@
 package com.giga;
 
+import com.giga.controllers.MainController;
 import org.flywaydb.core.Flyway;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,19 +20,15 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
+        //create db
         SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.close();
-
+        //migrate db
         Flyway flyway = Flyway.configure().dataSource("jdbc:sqlite:sqlite/db/gps.db", null, null).baselineOnMigrate(true).load();
-        // Start the migration
         flyway.migrate();
 
-
-
-
-
+        //load main scene
         scene = new Scene(loadFXML("MainView"));
         stage.setScene(scene);
         stage.show();
@@ -43,9 +40,8 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        System.out.println(App.class.getResource("view/"+fxml + ".fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/"+fxml + ".fxml"));
-
+        fxmlLoader.setController(MainController.getInstance());
         return fxmlLoader.load();
     }
 

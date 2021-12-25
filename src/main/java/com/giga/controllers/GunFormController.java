@@ -17,18 +17,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.internal.util.ValueHolder;
 
 
 public class GunFormController implements Initializable {
@@ -49,13 +50,21 @@ public class GunFormController implements Initializable {
     @FXML private TableColumn gCaliberColumn;
     @FXML private TableColumn gBarrelLenghtColumn;
     @FXML private TableColumn gMuzzleVelocityColumn;
-
-
-
-
+    @FXML private TableColumn gEdit;
+    @FXML private TableColumn gDelete;
+    @FXML private MainController MainController;
     @FXML
+    private void addTab(Integer gunIndex) throws IOException {
+        Tab singleTab  = new Tab("Edit: "+ Context.getInstance().getGunTable().get(gunIndex).getGunName());
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/gunEditView.fxml"));
+        fxmlLoader.setController(new GunEditController(gunIndex));
+        AnchorPane anchorPane = fxmlLoader.load();
+        singleTab.setContent(anchorPane);
+        MainController.getInstance().addTab(singleTab);
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.MainController = MainController.getInstance();
         gNameColumn.setCellValueFactory(new PropertyValueFactory<Gun, String>("gunName"));
         gAmmoNameColumn.setCellValueFactory(new PropertyValueFactory<Gun, String>("ammoName"));
         gNationColumn.setCellValueFactory(new PropertyValueFactory<Gun, String>("nation"));
@@ -63,8 +72,75 @@ public class GunFormController implements Initializable {
         gCaliberColumn.setCellValueFactory(new PropertyValueFactory<Gun, Double>("caliber"));
         gBarrelLenghtColumn.setCellValueFactory(new PropertyValueFactory<Gun, Double>("barrelLenght"));
         gMuzzleVelocityColumn.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("muzzleVelocity"));
+        gEdit.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("id"));
+        gDelete.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("id"));
+
+        //Handles Edit/Delete Buttons
+        Callback<TableColumn<Gun, Integer>, TableCell<Gun, Integer>> cellEditFactory =
+                new Callback<>() {
+                    @Override
+                    public TableCell call(final TableColumn<Gun, Integer> column) {
+                        final TableCell<Gun, Integer> cell = new TableCell<Gun, Integer>() {
+                            final Button btn = new Button(column.getText());
+
+                            @Override
+                            public void updateItem(Integer gunId, boolean empty) {
+                                super.updateItem(gunId, empty);
+                                if (empty) {
+                                    //TODO:add some svg graphic
+                                    setGraphic(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        try {
+                                            addTab(getIndex());
+
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    });
+                                    setGraphic(btn);
+                                }
+                                setText(null);
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        Callback<TableColumn<Gun, String>, TableCell<Gun, Integer>> cellDeleteFactory =
+            new Callback<TableColumn<Gun, String>, TableCell<Gun, Integer>>() {
+                @Override
+                public TableCell call(final TableColumn<Gun, String> column) {
+                    final TableCell<Gun, Integer> cell = new TableCell<Gun, Integer>() {
+                        final Button btn = new Button(column.getText());
+
+                        @Override
+                        public void updateItem(Integer gunID, boolean empty) {
+                            super.updateItem(gunID, empty);
+                            if (empty) {
+                                //TODO:add some svg graphic
+                                setGraphic(null);
+                            } else {
+                                btn.setOnAction(event -> {
+                                    //delete gun
+                                    Context.getInstance().deleteGunById(gunID);
+                                    //updates gTable
+                                    gTable.setItems(Context.getInstance().getGunTable());
+                                });
+                                setGraphic(btn);
+                            }
+                            setText(null);
+                        }
+                    };
+                    return cell;
+                }
+            };
+        gEdit.setCellFactory(cellEditFactory);
+        gDelete.setCellFactory(cellDeleteFactory);
+
+        //updates gTable
         gTable.setItems(Context.getInstance().getGunTable());
-        //retrieves gun dropdown list
+   
     }
 
     public void refresh(URL location, ResourceBundle resources) {

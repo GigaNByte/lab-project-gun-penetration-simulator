@@ -101,7 +101,7 @@ public class VehicleFormController implements Initializable {
                 vFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
                 vFormErrorMessage.setText("Added gun successfully");
                 vFormErrorMessage.setVisible(true);
-
+                
             }catch (Exception e){
                 vFormErrorMessage.setStyle("-fx-text-inner-color: red;-fx-text-fill: red;");
                 vFormErrorMessage.setText("Error at adding vehicle");

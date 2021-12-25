@@ -62,6 +62,22 @@ public class Context {
         gunTable.setAll(allGuns);
         return gunTable;
     }
+    public Gun getGunById(Integer gunId){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Gun gun = session.find(Gun.class, gunId);
+        session.getTransaction().commit();
+        session.close();
+        return  gun;
+    }
+    public void deleteGunById(Integer gunId) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Gun gun = session.find(Gun.class, gunId);
+        session.remove(gun);
+        session.getTransaction().commit();
+        session.close();
+    }
     public void setGunTable(ObservableList<Gun> gunTable) {
         this.gunTable = gunTable;
     }
