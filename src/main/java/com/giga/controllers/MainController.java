@@ -44,17 +44,13 @@ public class MainController implements Initializable {
 
     }
 
-
-
     public static MainController getInstance() {
         return instance;
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
 
 }

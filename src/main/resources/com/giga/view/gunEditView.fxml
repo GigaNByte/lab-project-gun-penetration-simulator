@@ -6,6 +6,7 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -25,56 +26,50 @@
                             <children>
                                 <Label text="Gun Name">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
                                 <Label text="Ammo Name">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
                                 <Label text="Nation">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
                                 <Label text="Ammo Type">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="10.0" layoutY="150.0" text="Caliber">
+                                <Label layoutX="10.0" layoutY="150.0" text="Caliber (mm)">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="10.0" layoutY="185.0" text="Barrel Lenght">
+                                <Label layoutX="10.0" layoutY="185.0" text="Barrel Lenght (calibres)">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="10.0" layoutY="220.0" text="Muzzle Velocity">
+                                <Label layoutX="10.0" layoutY="220.0" text="Muzzle Velocity (m/s)">
                                     <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </Label>
-                                <Label layoutX="10.0" layoutY="290.0" text="Penetration Table">
-                                    <font>
-                                        <Font size="14.0" />
+                                        <Font size="16.0" />
                                     </font>
                                 </Label>
                             </children>
                         </VBox>
                         <VBox spacing="20.0">
                             <children>
-                                <TextField id="gEditName" fx:id="gEditName" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
-                                <TextField id="gEditAmmoName" fx:id="gEditAmmoName" layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
-                                <TextField id="gEditNation" fx:id="gEditNation" layoutX="10.0" layoutY="90.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
-                                <TextField id="gEditAmmoType" fx:id="gEditAmmoType" layoutX="10.0" layoutY="130.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
-                                <TextField id="gEditCalliber" fx:id="gEditCalliber" layoutX="10.0" layoutY="170.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
-                                <TextField id="gEditBarrelLenght" fx:id="gEditBarrelLenght" layoutX="10.0" layoutY="210.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
-                                <TextField id="gEditMuzzleVelocity" fx:id="gEditMuzzleVelocity" layoutX="10.0" layoutY="250.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
-                                <TextField id="gEditPenetrationTable" fx:id="gEditPenetrationTable" layoutX="10.0" layoutY="290.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" />
+                                <TextField id="gEditName" fx:id="gEditName" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" />
+                                <TextField id="gEditAmmoName" fx:id="gEditAmmoName" layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" />
+                                <TextField id="gEditNation" fx:id="gEditNation" layoutX="10.0" layoutY="90.0" maxHeight="-Infinity" minHeight="-Infinity" />
+                                <TextField id="gEditAmmoType" fx:id="gEditAmmoType" layoutX="10.0" layoutY="130.0" maxHeight="-Infinity" minHeight="-Infinity" />
+                        <Spinner fx:id="gEditCalliber" editable="true" max="1000." min="1." />
+                        <Spinner fx:id="gEditBarrelLenght" editable="true" layoutX="10.0" layoutY="290.0" max="10000." min="1." />
+                        <Spinner fx:id="gEditMuzzleVelocity" editable="true" layoutX="10.0" layoutY="335.0" max="10000" min="1" />
                             </children>
                         </VBox>
                     </children>
@@ -93,7 +88,7 @@
                 </HBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="350.0" prefHeight="100.0" prefWidth="318.0">
                <children>
-                  <Button id="gEditUpdateButton" alignment="CENTER" mnemonicParsing="false" onAction="#submitGunEdit" text="Update Gun" textAlignment="CENTER">
+                  <Button id="gEditUpdateButton" alignment="CENTER" mnemonicParsing="false" onAction="#submitGunEdit" text="Update Gun data" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -103,7 +98,7 @@
             </children>
         </VBox>
         <VBox layoutX="385.0" layoutY="34.0" />
-          <TableView  fx:id="gPenTable" layoutX="387.0" layoutY="388.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="732.0">
+          <TableView fx:id="gPenTable" layoutX="387.0" layoutY="388.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" prefWidth="732.0">
               <columns>
                   <TableColumn fx:id="gPenTable100" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="100m" />
                   <TableColumn fx:id="gPenTable300" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="300m" />
@@ -114,12 +109,12 @@
                   <TableColumn fx:id="gPenTable3000" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="3000m" />
               </columns>
           </TableView>
-      <LineChart id="gEditPenChart" layoutX="387.0" layoutY="34.0" legendSide="TOP" prefHeight="334.0" prefWidth="732.0" title="Gun Penetration">
+      <LineChart id="gEditPenChart" fx:id="gEditPenChart" layoutX="387.0" layoutY="34.0" legendSide="TOP" prefHeight="334.0" prefWidth="732.0" title="Gun Penetration">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <NumberAxis fx:id="gEditPenChartXAxis" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis side="LEFT" />
+          <NumberAxis fx:id="gEditPenChartYAxis" side="LEFT" />
         </yAxis>
       </LineChart>
     </children>

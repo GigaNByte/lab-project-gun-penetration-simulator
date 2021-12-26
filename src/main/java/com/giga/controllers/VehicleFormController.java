@@ -30,7 +30,6 @@ public class VehicleFormController implements Initializable {
     @FXML private Spinner vFormSideArmorAngle;
     @FXML private ChoiceBox vFormGun;
     @FXML private Text vFormErrorMessage;
-    ObservableList<Gun> guns = FXCollections.observableArrayList();
     //table
     @FXML private TableView<Vehicle> vTable ;
     @FXML private TableColumn<Vehicle,String> vNameColumn;
@@ -71,9 +70,9 @@ public class VehicleFormController implements Initializable {
     public void submitVehicleForm() {
 
 
-        if (vFormName.getText().isEmpty() || vFormNation.getText().isEmpty() || (Integer)vFormFrontArmorThick.getValue() <= 0
-            || (Integer)vFormSideArmorThick.getValue() <= 0 || (Integer)vFormFrontArmorAngle.getValue() <= 0
-                || (Integer)vFormSideArmorAngle.getValue() <= 0 ){
+        if (vFormName.getText().isEmpty() || vFormNation.getText().isEmpty() || (Integer)vFormFrontArmorThick.getValue() < 0
+            || (Integer)vFormSideArmorThick.getValue() < 0 || (Integer)vFormFrontArmorAngle.getValue() < 0
+                || (Integer)vFormSideArmorAngle.getValue() < 0 ){
             vFormErrorMessage.setText("Some fields are missing");
             vFormErrorMessage.setStyle("-fx-text-inner-color: red;");
             vFormErrorMessage.setVisible(true);
@@ -91,11 +90,7 @@ public class VehicleFormController implements Initializable {
 
             try {
                 //TODO: replace code below as  addVehicle method in Context
-                Session session = sessionFactory.openSession();
-                session.beginTransaction();
-                session.persist(newVehicle);
-                session.getTransaction().commit();
-                session.close();
+                Context.getInstance().saveOrUpdateEntity(newVehicle);
                 vTable.setItems(Context.getInstance().getVehicleTable());
                 //TODO:Color does not work
                 vFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");

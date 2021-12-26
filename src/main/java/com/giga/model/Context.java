@@ -25,9 +25,13 @@ public class Context {
         fireTestTable.setAll(allFireTests);
         return fireTestTable;
     }
-
-    public void setFireTestTable(ObservableList<FireTest> fireTestTable) {
-        this.fireTestTable = fireTestTable;
+    //TODO:Provide Strict Object Typing
+    public void saveOrUpdateEntity(Object entityObject){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.saveOrUpdate(entityObject);
+        session.getTransaction().commit();
+        session.close();
     }
 
     public ObservableList<Vehicle> getVehicleTable() {
@@ -38,10 +42,6 @@ public class Context {
         session.close();
         vehicleTable.setAll(allVehicles);
         return vehicleTable;
-    }
-
-    public void setVehicleTable(ObservableList<Vehicle> vehicleTable) {
-        this.vehicleTable = vehicleTable;
     }
 
     public ObservableList<Gun> getGunTable() {
@@ -62,14 +62,6 @@ public class Context {
         gunTable.setAll(allGuns);
         return gunTable;
     }
-    public Gun getGunById(Integer gunId){
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Gun gun = session.find(Gun.class, gunId);
-        session.getTransaction().commit();
-        session.close();
-        return  gun;
-    }
     public void deleteGunById(Integer gunId) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -78,10 +70,6 @@ public class Context {
         session.getTransaction().commit();
         session.close();
     }
-    public void setGunTable(ObservableList<Gun> gunTable) {
-        this.gunTable = gunTable;
-    }
-
     private final static Context instance = new Context();
 
     public static Context getInstance() {

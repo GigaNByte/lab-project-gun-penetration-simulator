@@ -14,7 +14,9 @@ public class FireTest {
 
 
 
-    //technicaly enums should be side hull,front hull etc.
+    //TODO:technicaly enums should be side hull,front hull etc.
+    //TODO:Implement Armor part Class or extend enum to contain thickness value
+
     public enum  VehiclePart{
         FRONT_ARMOR("Front Hull"),
         SIDE_ARMOR("Side Hull");

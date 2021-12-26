@@ -37,11 +37,11 @@ public class GunFormController implements Initializable {
     @FXML private TextField gFormName;
     @FXML private TextField gFormAmmoName;
     @FXML private TextField gFormAmmoType;
-    @FXML private TextField gFormCalliber;
+    @FXML private Spinner<Double> gFormCalliber;
     @FXML private TextField gFormNation;
-    @FXML private TextField gFormBarrelLenght;
+    @FXML private Spinner<Double> gFormBarrelLenght;
     @FXML private Text gFormErrorMessage;
-    @FXML private TextField gFormMuzzleVelocity;
+    @FXML private Spinner<Integer> gFormMuzzleVelocity;
     @FXML private TableView<Gun> gTable ;
     @FXML private TableColumn gNameColumn;
     @FXML private TableColumn gAmmoNameColumn;
@@ -148,28 +148,37 @@ public class GunFormController implements Initializable {
     }
     @FXML
     public void submitGunForm() throws IOException {
-        if (gFormName.getText().isEmpty() || gFormName.getText().isEmpty() || gFormAmmoName.getText().isEmpty() || gFormAmmoType.getText().isEmpty()|| Double.parseDouble(gFormMuzzleVelocity.getText()) <= 0. ||  Double.parseDouble(gFormCalliber.getText()) <= 0. || Integer.parseInt(gFormBarrelLenght.getText()) <= 0 ){
+
+        Double ja = gFormCalliber.getValue().doubleValue();
+        if (gFormName.getText().isEmpty()
+                || gFormName.getText().isEmpty()
+                || gFormAmmoName.getText().isEmpty()
+                || gFormAmmoType.getText().isEmpty()||
+                gFormMuzzleVelocity.getValue() <= 0 ||
+                gFormCalliber.getValue().doubleValue() <= 0. ||
+                gFormBarrelLenght.getValue().doubleValue()  <= 0. ){
             gFormErrorMessage.setText("Some fields are missing");
             gFormErrorMessage.setStyle("-fx-text-inner-color: red;");
             gFormErrorMessage.setVisible(true);
         }else{
-            // code below should belong to DAO class
+            //TODO: refactor Gun class
             Gun newGun = new Gun();
             newGun.setGunName(gFormName.getText());
             newGun.setNation(gFormNation.getText());
             newGun.setAmmoName(gFormAmmoName.getText());
             newGun.setAmmoType(gFormAmmoType.getText());
-            newGun.setBarrelLenght(Double.parseDouble(gFormBarrelLenght.getText()));
-            newGun.setMuzzleVelocity(Integer.parseInt(gFormMuzzleVelocity.getText()));
-            newGun.setCaliber(Double.parseDouble(gFormCalliber.getText()));
-
+            newGun.setBarrelLenght(gFormBarrelLenght.getValue().doubleValue() );
+            newGun.setMuzzleVelocity(gFormMuzzleVelocity.getValue());
+            newGun.setCaliber(gFormCalliber.getValue().doubleValue() );
+            newGun.setPen100(0);
+            newGun.setPen300(0);
+            newGun.setPen500(0);
+            newGun.setPen1000(0);
+            newGun.setPen1500(0);
+            newGun.setPen2000(0);
+            newGun.setPen3000(0);
             try{
-                //TODO: replace code below as  addVehicle method in Context
-                Session session = sessionFactory.openSession();
-                session.beginTransaction();
-                session.persist(newGun);
-                session.getTransaction().commit();
-                session.close();
+                Context.getInstance().saveOrUpdateEntity(newGun);
                 gFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
                 gFormErrorMessage.setText("Added gun successfully");
                 gFormErrorMessage.setVisible(true);

@@ -32,7 +32,7 @@ public class App extends Application {
         scene = new Scene(loadFXML("MainView"));
         stage.setScene(scene);
         stage.show();
-
+        stage.setTitle("Gun Penetration Simulator");
     }
 
     static void setRoot(String fxml) throws IOException {
