@@ -58,6 +58,8 @@ public class GunEditController implements Initializable {
     @FXML
     private TableColumn<Gun, Integer> gPenTable2000;
     @FXML
+    private TableColumn<Gun, Integer> gPenTable2500;
+    @FXML
     private TableColumn<Gun, Integer> gPenTable3000;
     @FXML
     private Integer gunIndex;
@@ -93,6 +95,7 @@ public class GunEditController implements Initializable {
         gPenTable1000.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("pen1000"));
         gPenTable1500.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("pen1500"));
         gPenTable2000.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("pen2000"));
+        gPenTable2500.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("pen2500"));
         gPenTable3000.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("pen3000"));
         //add pen table row
         gPenTable.getItems().add(editableGun);
@@ -104,6 +107,7 @@ public class GunEditController implements Initializable {
         cells.add(gPenTable1000);
         cells.add(gPenTable1500);
         cells.add(gPenTable2000);
+        cells.add(gPenTable2500);
         cells.add(gPenTable3000);
 
         //load values for spinners
@@ -111,7 +115,7 @@ public class GunEditController implements Initializable {
         gEditCalliber.getValueFactory().setValue(editableGun.getCaliber());
         gEditBarrelLenght.getValueFactory().setValue(editableGun.getBarrelLenght());
 
-
+        //cell editing
        for(TableColumn cell : cells){
            cell.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
        }
@@ -139,6 +143,10 @@ public class GunEditController implements Initializable {
                 (TableColumn.CellEditEvent<Gun, Integer> t) -> {
                     t.getTableView().getItems().get(t.getTablePosition().getRow()).setPen2000(t.getNewValue());
                 });
+        gPenTable2500.setOnEditCommit(
+                (TableColumn.CellEditEvent<Gun, Integer> t) -> {
+                    t.getTableView().getItems().get(t.getTablePosition().getRow()).setPen2500(t.getNewValue());
+                });
         gPenTable3000.setOnEditCommit(
                 (TableColumn.CellEditEvent<Gun, Integer> t) -> {
                     t.getTableView().getItems().get(t.getTablePosition().getRow()).setPen3000(t.getNewValue());
@@ -160,6 +168,7 @@ public class GunEditController implements Initializable {
         series.getData().add(new XYChart.Data(1000, editableGun.getPen1000()));
         series.getData().add(new XYChart.Data(1500, editableGun.getPen1500()));
         series.getData().add(new XYChart.Data(2000, editableGun.getPen2000()));
+        series.getData().add(new XYChart.Data(2500, editableGun.getPen2500()));
         series.getData().add(new XYChart.Data(3000, editableGun.getPen3000()));
 
         gEditPenChart.getData().add(series);

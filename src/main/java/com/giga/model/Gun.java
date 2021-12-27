@@ -20,6 +20,7 @@ public class Gun {
     private Integer pen1000;
     private Integer pen1500;
     private Integer pen2000;
+    private Integer pen2500;
     private Integer pen3000;
     private Set<Vehicle> vehicles;
 
@@ -163,7 +164,15 @@ public class Gun {
     public void setPen2000(Integer pen2000) {
         this.pen2000 = pen2000;
     }
+    @Basic
+    @Column(name = "pen_2500", nullable = true)
+    public Integer getPen2500() {
+        return pen2500;
+    }
 
+    public void setPen2500(Integer pen2500) {
+        this.pen2500 = pen2500;
+    }
     @Basic
     @Column(name = "pen_3000", nullable = true)
     public Integer getPen3000() {

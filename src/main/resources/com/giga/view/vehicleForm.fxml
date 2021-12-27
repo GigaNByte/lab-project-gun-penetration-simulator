@@ -101,17 +101,18 @@
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="444.0" layoutY="35.0" prefHeight="399.0" prefWidth="840.0">
+        <VBox layoutX="444.0" layoutY="35.0" prefHeight="399.0"  maxWidth="Infinity">
             <children>
-                <TableView fx:id="vTable" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="877.0">
+                <TableView fx:id="vTable" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0"  maxWidth="Infinity">
                     <columns>
-                        <TableColumn fx:id="vNameColumn" maxWidth="95.0" minWidth="81.0" prefWidth="92.0" text="Vehicle Name" />
+                        <TableColumn fx:id="vNameColumn" minWidth="81.0" prefWidth="150.0" maxWidth="Infinity" text="Vehicle Name" />
                         <TableColumn fx:id="vGunColumn" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Gun" />
                         <TableColumn fx:id="vNationColumn" maxWidth="133.0" minWidth="29.0" prefWidth="133.0" text="Nation" />
                         <TableColumn fx:id="vFrontThickColumn" maxWidth="173.0" minWidth="77.0" prefWidth="148.0" text="Front Armor Thick. (mm)" />
                         <TableColumn fx:id="vFrontArmorAngleColumn" maxWidth="136.0" minWidth="76.0" prefWidth="113.0" text="Front Armor Angle" />
                         <TableColumn fx:id="vSideThickColumn" maxWidth="154.0" minWidth="106.0" prefWidth="140.0" text="Side Armor Thick. (mm)" />
                         <TableColumn fx:id="vSideArmorAngleColumn" maxWidth="158.0" minWidth="92.0" prefWidth="113.0" text="Side Armor Angle" />
+                        <TableColumn fx:id="vDelete" maxWidth="143.0" minWidth="0.0" prefWidth="83.0" text="Delete" />
                     </columns>
                 </TableView>
             </children>

@@ -62,11 +62,12 @@ public class Context {
         gunTable.setAll(allGuns);
         return gunTable;
     }
-    public void deleteGunById(Integer gunId) {
+
+    public <T> void deleteEntityById(Class<T> entityClass, Integer id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Gun gun = session.find(Gun.class, gunId);
-        session.remove(gun);
+        T entity = session.find(entityClass, id);
+        session.remove(entity);
         session.getTransaction().commit();
         session.close();
     }

@@ -66,4 +66,13 @@ INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_
 INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_name","muzzle_velocity","nation","pen_100","pen_1000","pen_1500","pen_2000","pen_300","pen_3000","pen_500") VALUES (65,'BR-412','AP','53,5',100.0,'100mm/L53.5 (D-10T)',5350,'Soviet',895,177,140,122,105,168,76);
 INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_name","muzzle_velocity","nation","pen_100","pen_1000","pen_1500","pen_2000","pen_300","pen_3000","pen_500") VALUES (66,'BR-412B','APBC','53,5',100.0,'100mm/L53.5 (D-10T)',5350,'Soviet',895,178,156,142,130,173,108);
 INSERT INTO "guns" ("id","ammo_name","ammo_type","barrel_lenght","caliber","gun_name","muzzle_velocity","nation","pen_100","pen_1000","pen_1500","pen_2000","pen_300","pen_3000","pen_500") VALUES (67,'BR-412D','APBC','53,5',100.0,'100mm/L53.5 (D-10T)',5350,'Soviet',887,204,182,169,156,199,131);
+INSERT INTO "fire_tests" ("id","result","shot_angle","shotDistance","targetVehiclePart","test_date","test_name","targetVehicle","vehicle") VALUES (12,1,0,100,'FRONT_ARMOR',NULL,'test',1,2);
+INSERT INTO "fire_tests" ("id","result","shot_angle","shotDistance","targetVehiclePart","test_date","test_name","targetVehicle","vehicle") VALUES(13,0,0,100,'SIDE_ARMOR',NULL,'test',1,2);
+INSERT INTO "fire_tests" ("id","result","shot_angle","shotDistance","targetVehiclePart","test_date","test_name","targetVehicle","vehicle") VALUES(14,0,0,1500,'FRONT_ARMOR',NULL,'test',2,1);
+INSERT INTO "fire_tests" ("id","result","shot_angle","shotDistance","targetVehiclePart","test_date","test_name","targetVehicle","vehicle") VALUES(15,0,10,1500,'FRONT_ARMOR',NULL,'test',2,1);
+INSERT INTO "fire_tests" ("id","result","shot_angle","shotDistance","targetVehiclePart","test_date","test_name","targetVehicle","vehicle") VALUES(16,0,30,1500,'FRONT_ARMOR',NULL,'test',2,1);
+INSERT INTO "fire_tests" ("id","result","shot_angle","shotDistance","targetVehiclePart","test_date","test_name","targetVehicle","vehicle") VALUES(17,1,30,2500,'FRONT_ARMOR',NULL,'test',2,1);
+INSERT INTO "fire_tests" ("id","result","shot_angle","shotDistance","targetVehiclePart","test_date","test_name","targetVehicle","vehicle") VALUES(18,1,30,3000,'FRONT_ARMOR',NULL,'test',2,1);
+INSERT INTO "vehicles" ("id","front_armor_angle","front_armor_thickness","nation","side_armor_angle","side_armor_thickness","vehicle_name","gun") VALUES (1,55,85,'Germany',40,40,' Pzkpfw V Panther Ausf. D',19);
+INSERT INTO "vehicles" ("id","front_armor_angle","front_armor_thickness","nation","side_armor_angle","side_armor_thickness","vehicle_name","gun") VALUES (2,60,45,'USSR',40,45,'T-34-85 D-5T',6);
 END;

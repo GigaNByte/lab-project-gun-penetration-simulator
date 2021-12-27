@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -58,11 +59,15 @@ public class FireTestFormController implements Initializable {
     private TableColumn<FireTest, Integer> ftShotAngleColumn;
     @FXML
     private TableColumn<FireTest, Integer> ftShotDistanceColumn;
-    private ObservableList distances = FXCollections.observableArrayList(Arrays.asList(100, 300, 500, 1000, 1500, 2000, 3000));
+    @FXML
+    private TableColumn ftDelete;
+
+    private ObservableList distances = FXCollections.observableArrayList(Arrays.asList(100, 300, 500, 1000, 1500, 2000,2500, 3000));
 
     @FXML
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+    //TODO:Refactor: Refresh implementation is somehow different than in other controllers!
 
         ftNameColumn.setCellValueFactory(new PropertyValueFactory<FireTest, String>("testName"));
         ftVehicleColumn.setCellValueFactory(new PropertyValueFactory<FireTest, Vehicle>("vehicle"));
@@ -80,6 +85,39 @@ public class FireTestFormController implements Initializable {
         ftFormShotDistance.getSelectionModel().selectFirst();
 
         ftTable.setItems(Context.getInstance().getFireTestTable());
+
+        //handle delete button
+        ftDelete.setCellValueFactory(new PropertyValueFactory<FireTest, Integer>("id"));
+        Callback<TableColumn<FireTest, String>, TableCell<FireTest, Integer>> cellDeleteFactory =
+                new Callback<TableColumn<FireTest, String>, TableCell<FireTest, Integer>>() {
+                    @Override
+                    public TableCell call(final TableColumn<FireTest, String> column) {
+                        final TableCell<FireTest, Integer> cell = new TableCell<FireTest, Integer>() {
+                            final Button btn = new Button(column.getText());
+
+                            @Override
+                            public void updateItem(Integer ftID, boolean empty) {
+                                super.updateItem(ftID, empty);
+                                if (empty) {
+                                    //TODO:add some svg graphic
+                                    setGraphic(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        //delete gun
+                                        Context.getInstance().deleteEntityById(FireTest.class,ftID);
+                                        //updates gTable
+                                        ftTable.setItems(Context.getInstance().getFireTestTable());
+                                    });
+                                    setGraphic(btn);
+                                }
+                                setText(null);
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        ftDelete.setCellFactory(cellDeleteFactory);
+
         refresh();
     }
 
@@ -139,21 +177,27 @@ public class FireTestFormController implements Initializable {
     private FireTest.TestResult calculatePenetration() {
         Vehicle testVehicle = (Vehicle) ftFormVehicle.getValue();
         Vehicle targetVehicle = (Vehicle) ftFormTargetVehicle.getValue();
-
-        Double effectiveArmorThickness = 0D;
-        Double absoluteShotAngle;
+        Double armorThickness = 0d;
+        Double effectiveArmorThickness = 0d;
+        Double absoluteShotAngle = 0d;
         Integer rhaGunPenetration = 0;
 
         //TODO:Implement Armor part Class or extend enum to contain thickness value
+        //TODO:Implement second Shot angle variable (vertical angle)
         //calculates effective armor thickness
         if (ftFormTargetVehiclePart.getValue() == FireTest.VehiclePart.FRONT_ARMOR) {
-            effectiveArmorThickness = Double.valueOf(targetVehicle.getFrontArmorThickness());
-            absoluteShotAngle = (double) (targetVehicle.getFrontArmorAngle() - ((Integer) ftFormShotDistance.getValue()));
-            effectiveArmorThickness *= Math.cos(Math.abs(absoluteShotAngle));
+            armorThickness = Double.valueOf(targetVehicle.getFrontArmorThickness());
+            absoluteShotAngle = (double) (targetVehicle.getFrontArmorAngle() - ((Integer) ftFormShotAngle.getValue()));
+
         } else if (ftFormTargetVehiclePart.getValue() == FireTest.VehiclePart.SIDE_ARMOR) {
-            effectiveArmorThickness = Double.valueOf(targetVehicle.getSideArmorThickness());
-            absoluteShotAngle = (double) (targetVehicle.getSideArmorAngle() - ((Integer) ftFormShotDistance.getValue()));
-            effectiveArmorThickness *= Math.cos(Math.abs(absoluteShotAngle));
+            armorThickness = Double.valueOf(targetVehicle.getSideArmorThickness());
+            absoluteShotAngle = (double) (targetVehicle.getSideArmorAngle() - ((Integer) ftFormShotAngle.getValue()));
+        }
+
+        if (absoluteShotAngle>0){
+            effectiveArmorThickness = armorThickness/Math.sin(Math.toRadians(Math.abs(absoluteShotAngle)));
+        }else if ((absoluteShotAngle<0)){
+            effectiveArmorThickness = armorThickness/Math.cos(Math.toRadians(Math.abs(absoluteShotAngle)));
         }
 
         //TODO:Implement "Shell Critical Bounce Angle" variable dependent from ammo type
@@ -177,18 +221,31 @@ public class FireTestFormController implements Initializable {
             case 2000:
                 rhaGunPenetration = testVehicle.getGun().getPen2000();
                 break;
+            case 2500:
+                rhaGunPenetration = testVehicle.getGun().getPen2500();
+                break;
             case 3000:
                 rhaGunPenetration = testVehicle.getGun().getPen3000();
                 break;
             default:
                 // code block
         }
-
+        System.out.println("=========Firetest========");
+        System.out.println("actual: "+armorThickness);
+        System.out.printf("efective: %f\n", effectiveArmorThickness);
+        System.out.println("abs angle: "+absoluteShotAngle);
+        System.out.println("shot angle"+ (Integer) ftFormShotAngle.getValue());
+        System.out.println("armor angle"+ targetVehicle.getFrontArmorAngle());
+        System.out.println("gun penetration: " + rhaGunPenetration);
+        System.out.println("=========================");
         if(rhaGunPenetration >= effectiveArmorThickness){
             return FireTest.TestResult.PENETRATION;
         }else{
             return FireTest.TestResult.NO_PENETRATION;
         }
+
+
+
 
     }
 

@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.giga.HibernateConnection;
 import com.giga.model.Context;
+import com.giga.model.FireTest;
 import com.giga.model.Gun;
 import com.giga.model.Vehicle;
 import javafx.collections.FXCollections;
@@ -15,13 +16,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 
 public class VehicleFormController implements Initializable {
     //form
-    @FXML private SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
     @FXML private TextField vFormName;
     @FXML private TextField vFormNation;
     @FXML private Spinner vFormFrontArmorThick ;
@@ -39,7 +40,7 @@ public class VehicleFormController implements Initializable {
     @FXML private TableColumn<Vehicle,Integer> vFrontArmorAngleColumn;
     @FXML private TableColumn<Vehicle,Integer> vSideThickColumn;
     @FXML private TableColumn<Vehicle,Integer> vSideArmorAngleColumn;
-
+    @FXML private TableColumn vDelete;
 
 
     @FXML
@@ -58,13 +59,41 @@ public class VehicleFormController implements Initializable {
         vFormGun.setItems(Context.getInstance().getGunTable());
         vFormGun.getSelectionModel().selectFirst();
 
-        refresh();
+        //handle delete button
+        vDelete.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("id"));
+        Callback<TableColumn<Vehicle, String>, TableCell<Vehicle, Integer>> cellDeleteFactory =
+                new Callback<TableColumn<Vehicle, String>, TableCell<Vehicle, Integer>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Vehicle, String> column) {
+                        final TableCell<Vehicle, Integer> cell = new TableCell<Vehicle, Integer>() {
+                            final Button btn = new Button(column.getText());
+
+                            @Override
+                            public void updateItem(Integer vID, boolean empty) {
+                                super.updateItem(vID, empty);
+                                if (empty) {
+                                    //TODO:add some svg graphic
+                                    setGraphic(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        //delete gun
+                                        Context.getInstance().deleteEntityById(Vehicle.class,vID);
+                                        //updates gTable
+                                        vTable.setItems(Context.getInstance().getVehicleTable());
+                                    });
+                                    setGraphic(btn);
+                                }
+                                setText(null);
+                            }
+                        };
+                        return cell;
+                    }
+                };
+        vDelete.setCellFactory(cellDeleteFactory);
     }
 
     @FXML
     public void refresh() {
-
-
     }
     @FXML
     public void submitVehicleForm() {

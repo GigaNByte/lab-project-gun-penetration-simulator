@@ -93,11 +93,9 @@ public class GunFormController implements Initializable {
                                     btn.setOnAction(event -> {
                                         try {
                                             addTab(getIndex());
-
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-
                                     });
                                     setGraphic(btn);
                                 }
@@ -123,7 +121,7 @@ public class GunFormController implements Initializable {
                             } else {
                                 btn.setOnAction(event -> {
                                     //delete gun
-                                    Context.getInstance().deleteGunById(gunID);
+                                    Context.getInstance().deleteEntityById(Gun.class,(gunID));
                                     //updates gTable
                                     gTable.setItems(Context.getInstance().getGunTable());
                                 });
@@ -176,6 +174,7 @@ public class GunFormController implements Initializable {
             newGun.setPen1000(0);
             newGun.setPen1500(0);
             newGun.setPen2000(0);
+            newGun.setPen2500(0);
             newGun.setPen3000(0);
             try{
                 Context.getInstance().saveOrUpdateEntity(newGun);

@@ -94,11 +94,11 @@
             </HBox>
             </children>
         </VBox>
-        <VBox layoutX="385.0" layoutY="34.0" prefHeight="400.0" prefWidth="820.0">
+        <VBox layoutX="385.0" layoutY="34.0" prefHeight="400.0" prefWidth="820.0" maxWidth="Infinity">
             <children>
-                <TableView fx:id="gTable" nodeOrientation="LEFT_TO_RIGHT">
+                <TableView fx:id="gTable" nodeOrientation="LEFT_TO_RIGHT" maxWidth="Infinity">
                     <columns>
-                        <TableColumn fx:id="gNameColumn" maxWidth="177.0" minWidth="100.0" prefWidth="172.0" text="Gun Name" />
+                        <TableColumn fx:id="gNameColumn" maxWidth="Infinity" minWidth="100.0" prefWidth="172.0"  text="Gun Name" />
                         <TableColumn fx:id="gAmmoNameColumn" maxWidth="95.0" minWidth="23.0" prefWidth="83.0" text="Ammo Name" />
                         <TableColumn fx:id="gNationColumn" maxWidth="77.0" minWidth="25.0" prefWidth="77.0" text="Nation" />
                         <TableColumn fx:id="gAmmoTypeColumn" maxWidth="76.0" minWidth="28.0" prefWidth="76.0" text="Ammo Type" />

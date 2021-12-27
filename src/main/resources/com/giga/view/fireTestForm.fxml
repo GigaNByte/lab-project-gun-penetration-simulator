@@ -89,17 +89,18 @@
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="385.0" layoutY="34.0">
+        <VBox layoutX="385.0" layoutY="34.0" maxWidth="Infinity">
             <children>
-                <TableView fx:id="ftTable" nodeOrientation="LEFT_TO_RIGHT">
+                <TableView fx:id="ftTable" nodeOrientation="LEFT_TO_RIGHT" maxWidth="Infinity">
                     <columns>
-                        <TableColumn fx:id="ftNameColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Title" />
+                        <TableColumn fx:id="ftNameColumn" maxWidth="Infinity" minWidth="100.0" prefWidth="-1.0"  text="Title" />
                         <TableColumn fx:id="ftResultColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Result" />
-                        <TableColumn fx:id="ftVehicleColumn" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" text="Vehicle" />
-                        <TableColumn fx:id="ftTargetVehicleColumn" maxWidth="-1.0" minWidth="150.0" prefWidth="-1.0" text="Target Vehicle" />
+                        <TableColumn fx:id="ftVehicleColumn" maxWidth="Infinity" minWidth="150.0" prefWidth="-1.0" text="Vehicle" />
+                        <TableColumn fx:id="ftTargetVehicleColumn" maxWidth="Infinity" minWidth="150.0" prefWidth="-1.0" text="Target Vehicle" />
                         <TableColumn fx:id="ftTargetVehiclePartColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Targeted Part" />
                         <TableColumn fx:id="ftShotDistanceColumn" maxWidth="75.0" minWidth="66.0" prefWidth="66.0" text="Distance (m)" />
                         <TableColumn fx:id="ftShotAngleColumn" maxWidth="64.0" minWidth="50.0" prefWidth="64.0" text="Angle" />
+                        <TableColumn fx:id="ftDelete" maxWidth="143.0" minWidth="0.0" prefWidth="83.0" text="Delete" />
                     </columns>
                 </TableView>
             </children>
