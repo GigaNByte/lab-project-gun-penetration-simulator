@@ -20,8 +20,15 @@ public class HibernateConnection {
     /**
      * @return Hibernate Session Factory Object
      */
-    public static synchronized SessionFactory getSessionFactory() {
+    public static synchronized SessionFactory getSessionFactory(){
         if (sessionFactory == null) {
+            //jar driver not found fix
+            try{
+                Class.forName("org.sqlite.JDBC");
+            }catch (ClassNotFoundException e){
+
+            }
+
             sessionFactory = new Configuration()
                     .configure().buildSessionFactory();
         }

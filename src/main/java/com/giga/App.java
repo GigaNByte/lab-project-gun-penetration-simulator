@@ -22,8 +22,9 @@ public class App extends Application {
     private static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, ClassNotFoundException {
         //create db
+
         SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
         Session session = sessionFactory.openSession();
         session.close();

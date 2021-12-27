@@ -1,24 +1,16 @@
 package com.giga.controllers;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-
-import com.giga.HibernateConnection;
 import com.giga.model.Context;
-import com.giga.model.FireTest;
 import com.giga.model.Gun;
 import com.giga.model.Vehicle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 
 /**
  * JavaFX Controller for VehicleForm Tab
