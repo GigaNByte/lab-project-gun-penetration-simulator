@@ -5,19 +5,29 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.sql.Timestamp;
 
+/**
+ * Hibernate mapped entity FireTest class
+ *
+ * @author GigaNByte
+ * @since 1.0
+ */
 
 @Entity
-@Table(name="fire_tests")
+@Table(name = "fire_tests")
 public class FireTest {
-
 
 
     //TODO:technicaly enums should be side hull,front hull etc.
     //TODO:Implement Armor part Class or extend enum to contain thickness value
 
-    public enum  VehiclePart{
+    /**
+     * Enum of Implemented vehicle parts
+     *
+     * @author GigaNByte
+     * @since 1.0
+     */
+    public enum VehiclePart {
         FRONT_ARMOR("Front Hull"),
         SIDE_ARMOR("Side Hull");
 
@@ -33,7 +43,13 @@ public class FireTest {
         }
     }
 
-    public enum  TestResult{
+    /**
+     * Possible results of penetration test
+     *
+     * @author GigaNByte
+     * @since 1.0
+     */
+    public enum TestResult {
         PENETRATION,
         NO_PENETRATION,
     }
@@ -62,7 +78,7 @@ public class FireTest {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="vehicle", nullable=false)
+    @JoinColumn(name = "vehicle", nullable = false)
     public Vehicle getVehicle() {
         return vehicle;
     }
@@ -73,7 +89,7 @@ public class FireTest {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name="targetVehicle", nullable=false)
+    @JoinColumn(name = "targetVehicle", nullable = false)
     public Vehicle getTargetVehicle() {
         return targetVehicle;
     }
@@ -93,6 +109,7 @@ public class FireTest {
     }
 
     //TODO:Implement Timestampable.java: https://stackoverflow.com/questions/8202154/how-to-create-an-auto-generated-date-timestamp-field-in-a-play-jpa
+    //TODO:Or remove timestamp from app
     @Basic
     @Column(name = "test_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -113,7 +130,8 @@ public class FireTest {
     public void setShotAngle(Integer shotAngle) {
         this.shotAngle = shotAngle;
     }
-    @Column(name="shotDistance", nullable = false)
+
+    @Column(name = "shotDistance", nullable = false)
     public Integer getShotDistance() {
         return shotDistance;
     }
@@ -125,14 +143,15 @@ public class FireTest {
     public TestResult getResult() {
         return result;
     }
+
     @Enumerated(EnumType.STRING)
-    @Column(name="result", nullable = false)
+    @Column(name = "result", nullable = false)
     public void setResult(TestResult result) {
         this.result = result;
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name="targetVehiclePart", nullable = false)
+    @Column(name = "targetVehiclePart", nullable = false)
     public VehiclePart getTargetVehiclePart() {
         return targetVehiclePart;
     }

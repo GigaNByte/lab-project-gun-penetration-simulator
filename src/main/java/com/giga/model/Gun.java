@@ -1,10 +1,20 @@
 package com.giga.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Hibernate mapped entity Gun class
+ *
+ * @author GigaNByte
+ * @since 1.0
+ */
+
 @Entity
-@Table(name="guns")
+@Table(name = "guns")
 public class Gun {
     private Integer id;
     private String gunName;
@@ -33,6 +43,17 @@ public class Gun {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    //TODO delete on cascade doesn't work:https://stackoverflow.com/questions/14875793/jpa-hibernate-how-to-define-a-constraint-having-on-delete-cascade
+    @OneToMany(mappedBy = "gun", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    public Set<Vehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(Set<Vehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
     @Basic
@@ -164,6 +185,7 @@ public class Gun {
     public void setPen2000(Integer pen2000) {
         this.pen2000 = pen2000;
     }
+
     @Basic
     @Column(name = "pen_2500", nullable = true)
     public Integer getPen2500() {
@@ -173,6 +195,7 @@ public class Gun {
     public void setPen2500(Integer pen2500) {
         this.pen2500 = pen2500;
     }
+
     @Basic
     @Column(name = "pen_3000", nullable = true)
     public Integer getPen3000() {
@@ -183,16 +206,8 @@ public class Gun {
         this.pen3000 = pen3000;
     }
 
-    @OneToMany (mappedBy = "gun")
-    public Set<Vehicle> getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(Set<Vehicle> vehicles) {
-        this.vehicles = vehicles;
-    }
     @Override
-    public String toString(){
-        return this.getGunName()+" "+this.getAmmoType()+" "+this.getAmmoName();
+    public String toString() {
+        return this.getGunName() + " " + this.getAmmoType() + " " + this.getAmmoName();
     }
 }

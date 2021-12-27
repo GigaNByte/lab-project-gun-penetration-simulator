@@ -12,6 +12,4 @@ module com.giga {
     exports com.giga.model;
     exports com.giga;
     opens db.migration;
-
-
 }

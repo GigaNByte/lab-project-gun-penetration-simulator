@@ -18,9 +18,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//testing
-public class AppTest {
 
+public class AppTest {
+    //TODO delete on cascade doesn't work:https://stackoverflow.com/questions/14875793/jpa-hibernate-how-to-define-a-constraint-having-on-delete-cascade
     @Test
     public void app_delete_propragation() {
         //add gun and vehicle and assign them to two fire tests

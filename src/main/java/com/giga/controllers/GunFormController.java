@@ -31,37 +31,64 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.internal.util.ValueHolder;
 
-
+/**
+ * JavaFX Controller for GunForm Tab
+ *
+ * @author GigaNByte
+ * @since 1.0
+ */
 public class GunFormController implements Initializable {
-    @FXML private SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
-    @FXML private TextField gFormName;
-    @FXML private TextField gFormAmmoName;
-    @FXML private TextField gFormAmmoType;
-    @FXML private Spinner<Double> gFormCalliber;
-    @FXML private TextField gFormNation;
-    @FXML private Spinner<Double> gFormBarrelLenght;
-    @FXML private Text gFormErrorMessage;
-    @FXML private Spinner<Integer> gFormMuzzleVelocity;
-    @FXML private TableView<Gun> gTable ;
-    @FXML private TableColumn gNameColumn;
-    @FXML private TableColumn gAmmoNameColumn;
-    @FXML private TableColumn gNationColumn;
-    @FXML private TableColumn gAmmoTypeColumn;
-    @FXML private TableColumn gCaliberColumn;
-    @FXML private TableColumn gBarrelLenghtColumn;
-    @FXML private TableColumn gMuzzleVelocityColumn;
-    @FXML private TableColumn gEdit;
-    @FXML private TableColumn gDelete;
-    @FXML private MainController MainController;
+    @FXML
+    private SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
+    @FXML
+    private TextField gFormName;
+    @FXML
+    private TextField gFormAmmoName;
+    @FXML
+    private TextField gFormAmmoType;
+    @FXML
+    private Spinner<Double> gFormCalliber;
+    @FXML
+    private TextField gFormNation;
+    @FXML
+    private Spinner<Double> gFormBarrelLenght;
+    @FXML
+    private Text gFormErrorMessage;
+    @FXML
+    private Spinner<Integer> gFormMuzzleVelocity;
+    @FXML
+    private TableView<Gun> gTable;
+    @FXML
+    private TableColumn gNameColumn;
+    @FXML
+    private TableColumn gAmmoNameColumn;
+    @FXML
+    private TableColumn gNationColumn;
+    @FXML
+    private TableColumn gAmmoTypeColumn;
+    @FXML
+    private TableColumn gCaliberColumn;
+    @FXML
+    private TableColumn gBarrelLenghtColumn;
+    @FXML
+    private TableColumn gMuzzleVelocityColumn;
+    @FXML
+    private TableColumn gEdit;
+    @FXML
+    private TableColumn gDelete;
+    @FXML
+    private MainController MainController;
+
     @FXML
     private void addTab(Integer gunIndex) throws IOException {
-        Tab singleTab  = new Tab("Edit: "+ Context.getInstance().getGunTable().get(gunIndex).getGunName());
+        Tab singleTab = new Tab("Edit: " + Context.getInstance().getGunTable().get(gunIndex).getGunName());
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/gunEditView.fxml"));
         fxmlLoader.setController(new GunEditController(gunIndex));
         AnchorPane anchorPane = fxmlLoader.load();
         singleTab.setContent(anchorPane);
         MainController.getInstance().addTab(singleTab);
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.MainController = MainController.getInstance();
@@ -75,7 +102,7 @@ public class GunFormController implements Initializable {
         gEdit.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("id"));
         gDelete.setCellValueFactory(new PropertyValueFactory<Gun, Integer>("id"));
 
-        //Handles Edit/Delete Buttons
+        //Handles Edit and Delete Buttons
         Callback<TableColumn<Gun, Integer>, TableCell<Gun, Integer>> cellEditFactory =
                 new Callback<>() {
                     @Override
@@ -106,44 +133,47 @@ public class GunFormController implements Initializable {
                     }
                 };
         Callback<TableColumn<Gun, String>, TableCell<Gun, Integer>> cellDeleteFactory =
-            new Callback<TableColumn<Gun, String>, TableCell<Gun, Integer>>() {
-                @Override
-                public TableCell call(final TableColumn<Gun, String> column) {
-                    final TableCell<Gun, Integer> cell = new TableCell<Gun, Integer>() {
-                        final Button btn = new Button(column.getText());
+                new Callback<TableColumn<Gun, String>, TableCell<Gun, Integer>>() {
+                    @Override
+                    public TableCell call(final TableColumn<Gun, String> column) {
+                        final TableCell<Gun, Integer> cell = new TableCell<Gun, Integer>() {
+                            final Button btn = new Button(column.getText());
 
-                        @Override
-                        public void updateItem(Integer gunID, boolean empty) {
-                            super.updateItem(gunID, empty);
-                            if (empty) {
-                                //TODO:add some svg graphic
-                                setGraphic(null);
-                            } else {
-                                btn.setOnAction(event -> {
-                                    //delete gun
-                                    Context.getInstance().deleteEntityById(Gun.class,(gunID));
-                                    //updates gTable
-                                    gTable.setItems(Context.getInstance().getGunTable());
-                                });
-                                setGraphic(btn);
+                            @Override
+                            public void updateItem(Integer gunID, boolean empty) {
+                                super.updateItem(gunID, empty);
+                                if (empty) {
+                                    //TODO:add some svg graphic
+                                    setGraphic(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        //delete gun
+                                        Context.getInstance().deleteEntityById(Gun.class, (gunID));
+                                        //updates gTable
+                                        gTable.setItems(Context.getInstance().getGunTable());
+                                    });
+                                    setGraphic(btn);
+                                }
+                                setText(null);
                             }
-                            setText(null);
-                        }
-                    };
-                    return cell;
-                }
-            };
+                        };
+                        return cell;
+                    }
+                };
         gEdit.setCellFactory(cellEditFactory);
         gDelete.setCellFactory(cellDeleteFactory);
 
         //updates gTable
         gTable.setItems(Context.getInstance().getGunTable());
-   
+
     }
 
-    public void refresh(URL location, ResourceBundle resources) {
-        initialize(null,null);
-    }
+    /**
+     * Submits add gun form
+     *
+     * @author GigaNByte
+     * @since 1.0
+     */
     @FXML
     public void submitGunForm() throws IOException {
 
@@ -151,23 +181,23 @@ public class GunFormController implements Initializable {
         if (gFormName.getText().isEmpty()
                 || gFormName.getText().isEmpty()
                 || gFormAmmoName.getText().isEmpty()
-                || gFormAmmoType.getText().isEmpty()||
+                || gFormAmmoType.getText().isEmpty() ||
                 gFormMuzzleVelocity.getValue() <= 0 ||
                 gFormCalliber.getValue().doubleValue() <= 0. ||
-                gFormBarrelLenght.getValue().doubleValue()  <= 0. ){
+                gFormBarrelLenght.getValue().doubleValue() <= 0.) {
             gFormErrorMessage.setText("Some fields are missing");
             gFormErrorMessage.setStyle("-fx-text-inner-color: red;");
             gFormErrorMessage.setVisible(true);
-        }else{
+        } else {
             //TODO: refactor Gun class
             Gun newGun = new Gun();
             newGun.setGunName(gFormName.getText());
             newGun.setNation(gFormNation.getText());
             newGun.setAmmoName(gFormAmmoName.getText());
             newGun.setAmmoType(gFormAmmoType.getText());
-            newGun.setBarrelLenght(gFormBarrelLenght.getValue().doubleValue() );
+            newGun.setBarrelLenght(gFormBarrelLenght.getValue().doubleValue());
             newGun.setMuzzleVelocity(gFormMuzzleVelocity.getValue());
-            newGun.setCaliber(gFormCalliber.getValue().doubleValue() );
+            newGun.setCaliber(gFormCalliber.getValue().doubleValue());
             newGun.setPen100(0);
             newGun.setPen300(0);
             newGun.setPen500(0);
@@ -176,13 +206,13 @@ public class GunFormController implements Initializable {
             newGun.setPen2000(0);
             newGun.setPen2500(0);
             newGun.setPen3000(0);
-            try{
+            try {
                 Context.getInstance().saveOrUpdateEntity(newGun);
                 gFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
                 gFormErrorMessage.setText("Added gun successfully");
                 gFormErrorMessage.setVisible(true);
                 gTable.setItems(Context.getInstance().getGunTable());
-            }catch (Exception e){
+            } catch (Exception e) {
                 gFormErrorMessage.setStyle("-fx-text-inner-color: red;-fx-text-fill: red;");
                 gFormErrorMessage.setText("Error at adding gun");
                 gFormErrorMessage.setVisible(true);

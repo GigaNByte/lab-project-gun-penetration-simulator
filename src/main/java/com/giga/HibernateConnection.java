@@ -3,7 +3,13 @@ package com.giga;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-// https://refactoring.guru/pl/design-patterns/singleton/java/example#example-2
+/**
+ * Singleton Class that manages access to Hibernate sessionFactory Object
+ *
+ * @author GigaNByte
+ * @since 1.0
+ */
+//TODO:Make sure that this singleton is thread safe
 public class HibernateConnection {
 
     private static SessionFactory sessionFactory;
@@ -11,6 +17,9 @@ public class HibernateConnection {
     private HibernateConnection() {
     }
 
+    /**
+     * @return Hibernate Session Factory Object
+     */
     public static synchronized SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             sessionFactory = new Configuration()

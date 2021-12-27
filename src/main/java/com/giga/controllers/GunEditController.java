@@ -24,6 +24,12 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
+/**
+ * JavaFX Controller for GunEdit Tab
+ *
+ * @author GigaNByte
+ * @since 1.0
+ */
 public class GunEditController implements Initializable {
     @FXML
     private SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
@@ -34,7 +40,7 @@ public class GunEditController implements Initializable {
     @FXML
     private TextField gEditAmmoType;
     @FXML
-    private Spinner<Double>  gEditCalliber;
+    private Spinner<Double> gEditCalliber;
     @FXML
     private TextField gEditNation;
     @FXML
@@ -70,7 +76,8 @@ public class GunEditController implements Initializable {
     @FXML
     private NumberAxis PenetrationValueAxis;
     @FXML
-    private LineChart<Number,Number> gEditPenChart ;
+    private LineChart<Number, Number> gEditPenChart;
+
     public GunEditController(Integer gunIndex) {
         this.gunIndex = gunIndex;
     }
@@ -116,13 +123,13 @@ public class GunEditController implements Initializable {
         gEditBarrelLenght.getValueFactory().setValue(editableGun.getBarrelLenght());
 
         //cell editing
-       for(TableColumn cell : cells){
-           cell.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-       }
+        for (TableColumn cell : cells) {
+            cell.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        }
         gPenTable100.setOnEditCommit(
-            (TableColumn.CellEditEvent<Gun, Integer> t) -> {
-                t.getTableView().getItems().get(t.getTablePosition().getRow()).setPen100(t.getNewValue());
-            });
+                (TableColumn.CellEditEvent<Gun, Integer> t) -> {
+                    t.getTableView().getItems().get(t.getTablePosition().getRow()).setPen100(t.getNewValue());
+                });
         gPenTable300.setOnEditCommit(
                 (TableColumn.CellEditEvent<Gun, Integer> t) -> {
                     t.getTableView().getItems().get(t.getTablePosition().getRow()).setPen300(t.getNewValue());
@@ -155,8 +162,14 @@ public class GunEditController implements Initializable {
 
     }
 
-    //handles gEditPenChart
-    public void handleChart(){
+
+    /**
+     * Handles gEditPenChart
+     *
+     * @author GigaNByte
+     * @since 1.0
+     */
+    public void handleChart() {
         Gun editableGun = Context.getInstance().getGunTable().get(gunIndex);
 
         gEditPenChart.getData().clear();
@@ -173,28 +186,38 @@ public class GunEditController implements Initializable {
 
         gEditPenChart.getData().add(series);
 
-
     }
 
-    public void refresh(URL location, ResourceBundle resources) {
-        initialize(null, null);
-    }
-
+    /**
+     * Submits edit gun form
+     *
+     * @author GigaNByte
+     * @since 1.0
+     */
     @FXML
     public void submitGunEdit() throws IOException {
+
         try {
-            if (gEditName.getText().isEmpty() || gEditName.getText().isEmpty() || gEditAmmoName.getText().isEmpty() || gEditAmmoType.getText().isEmpty()||gEditMuzzleVelocity.getValue() <= 0D ||  gEditCalliber.getValue() <= 0D || gEditBarrelLenght.getValue() <= 0D ){
+            if (gEditName.getText().isEmpty() || gEditName.getText().isEmpty() || gEditAmmoName.getText().isEmpty() || gEditAmmoType.getText().isEmpty() || gEditMuzzleVelocity.getValue() <= 0D || gEditCalliber.getValue() <= 0D || gEditBarrelLenght.getValue() <= 0D) {
                 gEditErrorMessage.setText("Some fields are missing");
                 gEditErrorMessage.setStyle("-fx-text-inner-color: red;");
-            }else{
-                Context.getInstance().saveOrUpdateEntity(gPenTable.getItems().get(0));
+            } else {
+                Gun newGun = gPenTable.getItems().get(0);
+                newGun.setGunName(gEditName.getText());
+                newGun.setNation(gEditNation.getText());
+                newGun.setAmmoName(gEditAmmoName.getText());
+                newGun.setAmmoType(gEditAmmoType.getText());
+                newGun.setBarrelLenght(gEditBarrelLenght.getValue().doubleValue());
+                newGun.setMuzzleVelocity(gEditMuzzleVelocity.getValue());
+                newGun.setCaliber(gEditCalliber.getValue().doubleValue());
+                Context.getInstance().saveOrUpdateEntity(newGun);
                 handleChart();
                 gEditErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
                 gEditErrorMessage.setText("Edited gun successfully");
             }
             gEditErrorMessage.setVisible(true);
 
-        }catch (Exception e ){
+        } catch (Exception e) {
             e.printStackTrace();
             gEditErrorMessage.setStyle("-fx-text-inner-color: red;-fx-text-fill: red;");
             gEditErrorMessage.setText("Error at editing gun");

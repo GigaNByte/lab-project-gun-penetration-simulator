@@ -20,27 +20,49 @@ import javafx.util.Callback;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-
+/**
+ * JavaFX Controller for VehicleForm Tab
+ *
+ * @author GigaNByte
+ * @since 1.0
+ */
 public class VehicleFormController implements Initializable {
     //form
-    @FXML private TextField vFormName;
-    @FXML private TextField vFormNation;
-    @FXML private Spinner vFormFrontArmorThick ;
-    @FXML private Spinner vFormSideArmorThick;
-    @FXML private Spinner vFormFrontArmorAngle;
-    @FXML private Spinner vFormSideArmorAngle;
-    @FXML private ChoiceBox vFormGun;
-    @FXML private Text vFormErrorMessage;
+    @FXML
+    private TextField vFormName;
+    @FXML
+    private TextField vFormNation;
+    @FXML
+    private Spinner vFormFrontArmorThick;
+    @FXML
+    private Spinner vFormSideArmorThick;
+    @FXML
+    private Spinner vFormFrontArmorAngle;
+    @FXML
+    private Spinner vFormSideArmorAngle;
+    @FXML
+    private ChoiceBox vFormGun;
+    @FXML
+    private Text vFormErrorMessage;
     //table
-    @FXML private TableView<Vehicle> vTable ;
-    @FXML private TableColumn<Vehicle,String> vNameColumn;
-    @FXML private TableColumn<Vehicle,Gun> vGunColumn;
-    @FXML private TableColumn<Vehicle,String> vNationColumn;
-    @FXML private TableColumn<Vehicle,Integer> vFrontThickColumn;
-    @FXML private TableColumn<Vehicle,Integer> vFrontArmorAngleColumn;
-    @FXML private TableColumn<Vehicle,Integer> vSideThickColumn;
-    @FXML private TableColumn<Vehicle,Integer> vSideArmorAngleColumn;
-    @FXML private TableColumn vDelete;
+    @FXML
+    private TableView<Vehicle> vTable;
+    @FXML
+    private TableColumn<Vehicle, String> vNameColumn;
+    @FXML
+    private TableColumn<Vehicle, Gun> vGunColumn;
+    @FXML
+    private TableColumn<Vehicle, String> vNationColumn;
+    @FXML
+    private TableColumn<Vehicle, Integer> vFrontThickColumn;
+    @FXML
+    private TableColumn<Vehicle, Integer> vFrontArmorAngleColumn;
+    @FXML
+    private TableColumn<Vehicle, Integer> vSideThickColumn;
+    @FXML
+    private TableColumn<Vehicle, Integer> vSideArmorAngleColumn;
+    @FXML
+    private TableColumn vDelete;
 
 
     @FXML
@@ -77,7 +99,7 @@ public class VehicleFormController implements Initializable {
                                 } else {
                                     btn.setOnAction(event -> {
                                         //delete gun
-                                        Context.getInstance().deleteEntityById(Vehicle.class,vID);
+                                        Context.getInstance().deleteEntityById(Vehicle.class, vID);
                                         //updates gTable
                                         vTable.setItems(Context.getInstance().getVehicleTable());
                                     });
@@ -92,16 +114,19 @@ public class VehicleFormController implements Initializable {
         vDelete.setCellFactory(cellDeleteFactory);
     }
 
-    @FXML
-    public void refresh() {
-    }
+    /**
+     * Submits vehicle gun form
+     *
+     * @author GigaNByte
+     * @since 1.0
+     */
     @FXML
     public void submitVehicleForm() {
 
 
-        if (vFormName.getText().isEmpty() || vFormNation.getText().isEmpty() || (Integer)vFormFrontArmorThick.getValue() < 0
-            || (Integer)vFormSideArmorThick.getValue() < 0 || (Integer)vFormFrontArmorAngle.getValue() < 0
-                || (Integer)vFormSideArmorAngle.getValue() < 0 ){
+        if (vFormName.getText().isEmpty() || vFormNation.getText().isEmpty() || (Integer) vFormFrontArmorThick.getValue() < 0
+                || (Integer) vFormSideArmorThick.getValue() < 0 || (Integer) vFormFrontArmorAngle.getValue() < 0
+                || (Integer) vFormSideArmorAngle.getValue() < 0) {
             vFormErrorMessage.setText("Some fields are missing");
             vFormErrorMessage.setStyle("-fx-text-inner-color: red;");
             vFormErrorMessage.setVisible(true);
@@ -112,10 +137,10 @@ public class VehicleFormController implements Initializable {
             newVehicle.setGun((Gun) vFormGun.getValue());
             newVehicle.setNation(vFormNation.getText());
             newVehicle.setVehicleName(vFormName.getText());
-            newVehicle.setFrontArmorThickness((Integer)vFormFrontArmorThick.getValue());
-            newVehicle.setSideArmorThickness((Integer)vFormSideArmorThick.getValue());
-            newVehicle.setFrontArmorAngle((Integer)vFormFrontArmorAngle.getValue());
-            newVehicle.setSideArmorAngle((Integer)vFormSideArmorAngle.getValue());
+            newVehicle.setFrontArmorThickness((Integer) vFormFrontArmorThick.getValue());
+            newVehicle.setSideArmorThickness((Integer) vFormSideArmorThick.getValue());
+            newVehicle.setFrontArmorAngle((Integer) vFormFrontArmorAngle.getValue());
+            newVehicle.setSideArmorAngle((Integer) vFormSideArmorAngle.getValue());
 
             try {
                 //TODO: replace code below as  addVehicle method in Context
@@ -125,8 +150,8 @@ public class VehicleFormController implements Initializable {
                 vFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
                 vFormErrorMessage.setText("Added gun successfully");
                 vFormErrorMessage.setVisible(true);
-                
-            }catch (Exception e){
+
+            } catch (Exception e) {
                 vFormErrorMessage.setStyle("-fx-text-inner-color: red;-fx-text-fill: red;");
                 vFormErrorMessage.setText("Error at adding vehicle");
                 vFormErrorMessage.setVisible(true);

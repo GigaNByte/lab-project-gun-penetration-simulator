@@ -1,3 +1,4 @@
+
 package com.giga.model;
 
 import com.giga.HibernateConnection;
@@ -10,12 +11,25 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 //TODO: Make this Singleton Thread Safe
 
+/**
+ * Singleton class that handles queries and stores state shared across all fxml tab controllers in app
+ *
+ * @author GigaNByte
+ * @since 1.0
+ */
 public class Context {
     private SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
-    @FXML private ObservableList<FireTest> fireTestTable = FXCollections.observableArrayList();
-    @FXML private ObservableList<Vehicle> vehicleTable = FXCollections.observableArrayList();
-    @FXML private ObservableList<Gun> gunTable = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<FireTest> fireTestTable = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<Vehicle> vehicleTable = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<Gun> gunTable = FXCollections.observableArrayList();
 
+
+    /**
+     * @return FireTests Entities from Database
+     */
     public ObservableList<FireTest> getFireTestTable() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -25,8 +39,14 @@ public class Context {
         fireTestTable.setAll(allFireTests);
         return fireTestTable;
     }
+
+    /**
+     * Adds or Updates entity in the database
+     *
+     * @param entityObject entity Object
+     */
     //TODO:Provide Strict Object Typing
-    public void saveOrUpdateEntity(Object entityObject){
+    public void saveOrUpdateEntity(Object entityObject) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.saveOrUpdate(entityObject);
@@ -34,6 +54,9 @@ public class Context {
         session.close();
     }
 
+    /**
+     * @return Vehicles Entities from Database
+     */
     public ObservableList<Vehicle> getVehicleTable() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -44,6 +67,9 @@ public class Context {
         return vehicleTable;
     }
 
+    /**
+     * @return Guns Entities from Database
+     */
     public ObservableList<Gun> getGunTable() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -53,6 +79,10 @@ public class Context {
         gunTable.setAll(allGuns);
         return gunTable;
     }
+
+    /**
+     * @return Gun
+     */
     public ObservableList<Gun> getGun() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -63,6 +93,11 @@ public class Context {
         return gunTable;
     }
 
+    /**
+     * @param entityClass class object of entity to be deleted
+     * @param id          id of entity
+     * @param <T>         class name of entity to be deleted
+     */
     public <T> void deleteEntityById(Class<T> entityClass, Integer id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -71,8 +106,12 @@ public class Context {
         session.getTransaction().commit();
         session.close();
     }
+
     private final static Context instance = new Context();
 
+    /**
+     * @return singleton instance of Context object
+     */
     public static Context getInstance() {
         return instance;
     }

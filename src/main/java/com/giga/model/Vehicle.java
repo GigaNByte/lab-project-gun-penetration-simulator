@@ -7,8 +7,15 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Hibernate mapped entity Vehicle class
+ *
+ * @author GigaNByte
+ * @since 1.0
+ */
+
 @Entity
-@Table(name="vehicles")
+@Table(name = "vehicles")
 public class Vehicle {
     private Integer id;
     private String vehicleName;
@@ -22,7 +29,6 @@ public class Vehicle {
     private Set<FireTest> saved_tests_target_vehicle = new HashSet<>();
 
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -34,7 +40,8 @@ public class Vehicle {
         this.id = id;
     }
 
-    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE)
+    //TODO delete on cascade doesn't work:https://stackoverflow.com/questions/14875793/jpa-hibernate-how-to-define-a-constraint-having-on-delete-cascade
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     public Set<FireTest> getSaved_tests_vehicle() {
         return saved_tests_vehicle;
@@ -44,7 +51,7 @@ public class Vehicle {
         this.saved_tests_vehicle = saved_tests_vehicle;
     }
 
-    @OneToMany(mappedBy = "targetVehicle",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "targetVehicle", cascade = CascadeType.REMOVE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     public Set<FireTest> getSaved_tests_target_vehicle() {
         return saved_tests_target_vehicle;
@@ -115,7 +122,7 @@ public class Vehicle {
     }
 
     @ManyToOne
-    @JoinColumn(name="gun", nullable=false)
+    @JoinColumn(name = "gun", nullable = false)
     public Gun getGun() {
         return gun;
     }
@@ -125,7 +132,7 @@ public class Vehicle {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.getVehicleName();
     }
 

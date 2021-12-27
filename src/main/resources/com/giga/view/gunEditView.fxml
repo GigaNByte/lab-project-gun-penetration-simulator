@@ -16,7 +16,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="gunEditPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="gunEditPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox layoutX="26.0" layoutY="34.0">
             <children>
@@ -26,100 +27,109 @@
                             <children>
                                 <Label text="Gun Name">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="16.0"/>
                                     </font>
                                 </Label>
                                 <Label text="Ammo Name">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="16.0"/>
                                     </font>
                                 </Label>
                                 <Label text="Nation">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="16.0"/>
                                     </font>
                                 </Label>
                                 <Label text="Ammo Type">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="16.0"/>
                                     </font>
                                 </Label>
                                 <Label layoutX="10.0" layoutY="150.0" text="Caliber (mm)">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="16.0"/>
                                     </font>
                                 </Label>
                                 <Label layoutX="10.0" layoutY="185.0" text="Barrel Lenght (calibres)">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="16.0"/>
                                     </font>
                                 </Label>
                                 <Label layoutX="10.0" layoutY="220.0" text="Muzzle Velocity (m/s)">
                                     <font>
-                                        <Font size="16.0" />
+                                        <Font size="16.0"/>
                                     </font>
                                 </Label>
                             </children>
                         </VBox>
                         <VBox spacing="20.0">
                             <children>
-                                <TextField id="gEditName" fx:id="gEditName" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" />
-                                <TextField id="gEditAmmoName" fx:id="gEditAmmoName" layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" />
-                                <TextField id="gEditNation" fx:id="gEditNation" layoutX="10.0" layoutY="90.0" maxHeight="-Infinity" minHeight="-Infinity" />
-                                <TextField id="gEditAmmoType" fx:id="gEditAmmoType" layoutX="10.0" layoutY="130.0" maxHeight="-Infinity" minHeight="-Infinity" />
-                        <Spinner fx:id="gEditCalliber" editable="true" max="1000." min="1." />
-                        <Spinner fx:id="gEditBarrelLenght" editable="true" layoutX="10.0" layoutY="290.0" max="10000." min="1." />
-                        <Spinner fx:id="gEditMuzzleVelocity" editable="true" layoutX="10.0" layoutY="335.0" max="10000" min="1" />
+                                <TextField id="gEditName" fx:id="gEditName" layoutX="10.0" layoutY="10.0"
+                                           maxHeight="-Infinity" minHeight="-Infinity"/>
+                                <TextField id="gEditAmmoName" fx:id="gEditAmmoName" layoutX="10.0" layoutY="50.0"
+                                           maxHeight="-Infinity" minHeight="-Infinity"/>
+                                <TextField id="gEditNation" fx:id="gEditNation" layoutX="10.0" layoutY="90.0"
+                                           maxHeight="-Infinity" minHeight="-Infinity"/>
+                                <TextField id="gEditAmmoType" fx:id="gEditAmmoType" layoutX="10.0" layoutY="130.0"
+                                           maxHeight="-Infinity" minHeight="-Infinity"/>
+                                <Spinner fx:id="gEditCalliber" editable="true" max="1000." min="1."/>
+                                <Spinner fx:id="gEditBarrelLenght" editable="true" layoutX="10.0" layoutY="290.0"
+                                         max="10000." min="1."/>
+                                <Spinner fx:id="gEditMuzzleVelocity" editable="true" layoutX="10.0" layoutY="335.0"
+                                         max="10000" min="1"/>
                             </children>
                         </VBox>
                     </children>
                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
                     </padding>
                 </HBox>
                 <HBox alignment="CENTER" prefHeight="11.0" prefWidth="318.0">
-               <children>
-                  <Text fx:id="gEditErrorMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" text="Some fields are missing" visible="false">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-               </children>
+                    <children>
+                        <Text fx:id="gEditErrorMessage" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0"
+                              text="Some fields are missing" visible="false">
+                            <font>
+                                <Font size="16.0"/>
+                            </font>
+                        </Text>
+                    </children>
                 </HBox>
-            <HBox alignment="CENTER" layoutX="10.0" layoutY="350.0" prefHeight="100.0" prefWidth="318.0">
-               <children>
-                  <Button id="gEditUpdateButton" alignment="CENTER" mnemonicParsing="false" onAction="#submitGunEdit" text="Update Gun data" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Button>
-               </children>
-            </HBox>
+                <HBox alignment="CENTER" layoutX="10.0" layoutY="350.0" prefHeight="100.0" prefWidth="318.0">
+                    <children>
+                        <Button id="gEditUpdateButton" alignment="CENTER" mnemonicParsing="false"
+                                onAction="#submitGunEdit" text="Update Gun data" textAlignment="CENTER">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                        </Button>
+                    </children>
+                </HBox>
             </children>
         </VBox>
-        <VBox layoutX="385.0" layoutY="34.0" />
-          <TableView fx:id="gPenTable" layoutX="387.0" layoutY="388.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0" >
-              <columns>
-                  <TableColumn fx:id="gPenTable100" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="100m" />
-                  <TableColumn fx:id="gPenTable300" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="300m" />
-                  <TableColumn fx:id="gPenTable500" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="500m" />
-                  <TableColumn fx:id="gPenTable1000" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="1000m" />
-                  <TableColumn fx:id="gPenTable1500" maxWidth="-1.0" minWidth="50.0" prefWidth="-1.0" text="1500m" />
-                  <TableColumn fx:id="gPenTable2000" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="2000m" />
-                  <TableColumn fx:id="gPenTable2500" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="2500m" />
-                  <TableColumn fx:id="gPenTable3000" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="3000m" />
-              </columns>
-          </TableView>
-      <LineChart id="gEditPenChart" fx:id="gEditPenChart" layoutX="387.0" layoutY="34.0" legendSide="TOP" prefHeight="334.0" prefWidth="732.0" title="Gun Penetration">
-        <xAxis>
-          <NumberAxis fx:id="gEditPenChartXAxis" side="BOTTOM" />
-        </xAxis>
-        <yAxis>
-          <NumberAxis fx:id="gEditPenChartYAxis" side="LEFT" />
-        </yAxis>
-      </LineChart>
+        <VBox layoutX="385.0" layoutY="34.0"/>
+        <TableView fx:id="gPenTable" layoutX="387.0" layoutY="388.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0">
+            <columns>
+                <TableColumn fx:id="gPenTable100" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="100m"/>
+                <TableColumn fx:id="gPenTable300" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="300m"/>
+                <TableColumn fx:id="gPenTable500" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="500m"/>
+                <TableColumn fx:id="gPenTable1000" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="1000m"/>
+                <TableColumn fx:id="gPenTable1500" maxWidth="-1.0" minWidth="50.0" prefWidth="-1.0" text="1500m"/>
+                <TableColumn fx:id="gPenTable2000" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="2000m"/>
+                <TableColumn fx:id="gPenTable2500" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="2500m"/>
+                <TableColumn fx:id="gPenTable3000" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="3000m"/>
+            </columns>
+        </TableView>
+        <LineChart id="gEditPenChart" fx:id="gEditPenChart" layoutX="387.0" layoutY="34.0" legendSide="TOP"
+                   prefHeight="334.0" prefWidth="732.0" title="Gun Penetration">
+            <xAxis>
+                <NumberAxis fx:id="gEditPenChartXAxis" side="BOTTOM"/>
+            </xAxis>
+            <yAxis>
+                <NumberAxis fx:id="gEditPenChartYAxis" side="LEFT"/>
+            </yAxis>
+        </LineChart>
     </children>
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
 </AnchorPane>
