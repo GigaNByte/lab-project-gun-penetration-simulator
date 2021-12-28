@@ -10,25 +10,31 @@ Demo database contains some WWII German and Soviet normalized gun&shell test dat
 <hr>
 
 # Basic usage
- Gun CRUD Interface:
+ ### Gun CRUD Interface:
 
 ![](./readme/1.gif) 
 ![](./readme/1.png)
 
-Gun Edit Penetration Table CRUD Interface:
+###Gun Edit Penetration Table CRUD Interface:
 
 ![](./readme/2.png)
 
 
  
- Vehicle CRUD Interface:
+ ### Vehicle CRUD Interface:
+
  ![](./readme/3.png)
  ![](./readme/2.gif)
 
- FireTest CRUD Interface:
+ ###FireTest CRUD Interface:
+
  ![](./readme/4.png)
  ![](./readme/3.gif)
 
+<hr>
+
+# ERD Diagram
+![](./readme/erd.png)
 <hr>
 
 # Demo dataset sources
@@ -37,3 +43,4 @@ Gun Edit Penetration Table CRUD Interface:
 [https://panzerworld.com/](https://panzerworld.com/)  
 [http://amizaur.prv.pl/www.wargamer.org/GvA/weapons/soviet.html](http://amizaur.prv.pl/www.wargamer.org/GvA/weapons/soviet.html)  
 [http://amizaur.prv.pl/www.wargamer.org/GvA/weapons/germany.html](http://amizaur.prv.pl/www.wargamer.org/GvA/weapons/germany.html)
+
