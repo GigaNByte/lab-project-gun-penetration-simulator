@@ -8,17 +8,17 @@
    <children>
       <TabPane fx:id="MainTabPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
          <tabs>
-            <Tab fx:id="tab" text="Fire Test">
+            <Tab fx:id="FireTestTab" text="Fire Test">
                <content>
                   <fx:include fx:id="FireTestForm" source="fireTestForm.fxml" />
                </content>
             </Tab>
-            <Tab text="Add Gun">
+            <Tab fx:id="GunTab" text="Add Gun">
                <content>
                   <fx:include fx:id="GunForm" source="gunForm.fxml" />
                </content>
             </Tab>
-            <Tab text="Add Vehicle">
+            <Tab fx:id="VehicleTab" text="Add Vehicle">
                <content>
                   <fx:include fx:id="VehicleForm" source="vehicleForm.fxml" />
                </content>

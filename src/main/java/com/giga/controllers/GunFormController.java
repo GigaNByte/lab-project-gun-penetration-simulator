@@ -79,6 +79,7 @@ public class GunFormController implements Initializable {
     @FXML
     private MainController MainController;
 
+
     @FXML
     private void addTab(Integer gunIndex) throws IOException {
         Tab singleTab = new Tab("Edit: " + Context.getInstance().getGunTable().get(gunIndex).getGunName());
@@ -91,6 +92,7 @@ public class GunFormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         this.MainController = MainController.getInstance();
         gNameColumn.setCellValueFactory(new PropertyValueFactory<Gun, String>("gunName"));
         gAmmoNameColumn.setCellValueFactory(new PropertyValueFactory<Gun, String>("ammoName"));
