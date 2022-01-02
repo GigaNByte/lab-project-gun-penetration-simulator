@@ -15,7 +15,7 @@ Demo database contains some WWII German and Soviet normalized gun&shell test dat
 ![](./readme/1.gif) 
 ![](./readme/1.png)
 
-###Gun Edit Penetration Table CRUD Interface:
+### Gun Edit Penetration Table CRUD Interface:
 
 ![](./readme/2.png)
 
@@ -26,7 +26,7 @@ Demo database contains some WWII German and Soviet normalized gun&shell test dat
  ![](./readme/3.png)
  ![](./readme/2.gif)
 
- ###FireTest CRUD Interface:
+ ### FireTest CRUD Interface:
 
  ![](./readme/4.png)
  ![](./readme/3.gif)
