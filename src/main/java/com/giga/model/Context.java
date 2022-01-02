@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+
+import javax.persistence.Query;
 import java.util.List;
 //TODO: Make this Singleton Thread Safe
 
@@ -39,6 +41,17 @@ public class Context {
         fireTestTable.setAll(allFireTests);
         return fireTestTable;
     }
+/**
+    Refreshes FireTest Entities from Database
+ */
+    public void refreshFireTestTable() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<FireTest> allFireTests = session.createQuery("FROM FireTest ").list();
+        session.getTransaction().commit();
+        session.close();
+        fireTestTable.setAll(allFireTests);
+    }
 
     /**
      * Adds or Updates entity in the database
@@ -65,6 +78,17 @@ public class Context {
         session.close();
         vehicleTable.setAll(allVehicles);
         return vehicleTable;
+    }
+    /**
+     Refreshes VehicleTable Entities from Database
+     */
+    public void refreshVehicleTable() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<Vehicle> allVehicles = session.createQuery("FROM Vehicle").list();
+        session.getTransaction().commit();
+        session.close();
+        vehicleTable.setAll(allVehicles);
     }
 
     /**
@@ -94,6 +118,63 @@ public class Context {
     }
 
     /**
+     deletes Vehicle by id (propagates deletion of linked entities: FireTest)
+     @param id  id of gun
+     */
+
+    public void deleteVehicleById(Integer id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Vehicle vehicleToDelete = session.find(Vehicle.class, id);
+        Query query = session.createQuery("from FireTest ft where ft.targetVehicle = :vehicleToDelete or ft.vehicle = :vehicleToDelete");
+        query.setParameter("vehicleToDelete", vehicleToDelete);
+        List<FireTest> fireTestsToDelete = query.getResultList();
+
+        for (FireTest fireTestToDelete: fireTestsToDelete) {
+            session.remove(fireTestToDelete);
+        }
+        session.remove(vehicleToDelete);
+        session.getTransaction().commit();
+        session.close();
+
+        refreshFireTestTable();
+    }
+
+    /**
+     * deletes Gun by id (propagates deletion of linked entities: FireTest, Vehicle)
+    @param id id of gun
+     */
+    public void deleteGunById( Integer id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Gun gunToDelete = session.find(Gun.class, id);
+        Query query = session.createQuery("from Vehicle v where v.gun=:gunToDelete");
+        query.setParameter("gunToDelete", gunToDelete);
+        query.getResultList();
+        List<Vehicle> vehiclesToDelete = query.getResultList();
+
+        session.getTransaction().commit();
+        session.close();
+
+        for (Vehicle vehicleToDelete:vehiclesToDelete) {
+            deleteVehicleById(vehicleToDelete.getId());
+        }
+
+
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.remove(gunToDelete);
+
+        session.getTransaction().commit();
+        session.close();
+
+        refreshVehicleTable();
+    }
+    /**
+     * deletes Entity by id (no delete propagation)
      * @param entityClass class object of entity to be deleted
      * @param id          id of entity
      * @param <T>         class name of entity to be deleted
@@ -101,8 +182,30 @@ public class Context {
     public <T> void deleteEntityById(Class<T> entityClass, Integer id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+
+        //propagate delete of certain entities
+
+        if (entityClass.getClass().getSimpleName() == "Gun"){
+            String selectionQuery = "SELECT FireTest FROM FireTest WHERE FireTest.targetVehicle = "+ id;
+            List<FireTest> fireTests = (List<FireTest>) session.createQuery(selectionQuery).list();
+            session.remove(fireTests);
+            String selectionQuery2 = "SELECT FireTest FROM FireTest WHERE FireTest.targetVehicle = "+ id;
+            List<FireTest> fireTests2 =  session.createQuery(selectionQuery2).list();
+            session.remove(fireTests2);
+        }else if (entityClass.getClass().getSimpleName() == "Vehicle" ){
+            String selectionQuery = "SELECT FireTest FROM FireTest WHERE FireTest.targetVehicle = "+ id;
+            List<FireTest> fireTests = (List<FireTest>) session.createQuery(selectionQuery).list();
+            session.remove(fireTests);
+            String selectionQuery2 = "SELECT FireTest FROM FireTest WHERE FireTest.targetVehicle = "+ id;
+            List<FireTest> fireTests2 =  session.createQuery(selectionQuery2).list();
+            session.remove(fireTests2);
+        }
+
         T entity = session.find(entityClass, id);
         session.remove(entity);
+
+
+
         session.getTransaction().commit();
         session.close();
     }

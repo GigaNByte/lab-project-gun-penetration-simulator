@@ -75,7 +75,6 @@ public class FireTestFormController implements Initializable {
         ftTargetVehiclePartColumn.setCellValueFactory(new PropertyValueFactory<FireTest, FireTest.VehiclePart>("targetVehiclePart"));
         ftResultColumn.setCellValueFactory(new PropertyValueFactory<FireTest, FireTest.TestResult>("result"));
         ftShotAngleColumn.setCellValueFactory(new PropertyValueFactory<FireTest, Integer>("shotAngle"));
-
         ftShotDistanceColumn.setCellValueFactory(new PropertyValueFactory<FireTest, Integer>("shotDistance"));
 
         List<FireTest.VehiclePart> allVehicleParts = Arrays.asList(FireTest.VehiclePart.class.getEnumConstants());
@@ -118,13 +117,10 @@ public class FireTestFormController implements Initializable {
                 };
         ftDelete.setCellFactory(cellDeleteFactory);
 
-        //retrieves gun dropdown list
-        ObservableList<Vehicle> vehicles = Context.getInstance().getVehicleTable();
-        ftFormTargetVehicle.getItems().setAll(vehicles);
+        ftFormTargetVehicle.getItems().setAll(Context.getInstance().getVehicleTable());
         ftFormTargetVehicle.getSelectionModel().selectFirst();
-        ftFormVehicle.getItems().setAll(vehicles);
-
-
+        ftFormVehicle.getItems().setAll(Context.getInstance().getVehicleTable());
+        ftFormVehicle.getSelectionModel().selectFirst();
     }
 
 

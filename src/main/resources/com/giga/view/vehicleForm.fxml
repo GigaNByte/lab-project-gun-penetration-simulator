@@ -63,10 +63,10 @@
                             <children>
                                 <TextField fx:id="vFormName" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" />
                                 <TextField fx:id="vFormNation" layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" />
-                                <Spinner fx:id="vFormFrontArmorThick" editable="true" initialValue="0" max="1000" minHeight="-Infinity" />
-                                <Spinner fx:id="vFormSideArmorThick" editable="true" initialValue="0" layoutX="10.0" layoutY="90.0" max="1000" min="0" minHeight="-Infinity" />
-                                <Spinner fx:id="vFormFrontArmorAngle" editable="true" initialValue="0" layoutX="10.0" layoutY="136.0" max="180" min="0" minHeight="-Infinity" />
-                                <Spinner fx:id="vFormSideArmorAngle" editable="true" initialValue="0" layoutX="10.0" layoutY="136.0" max="180" min="0" minHeight="-Infinity" />
+                                <Spinner fx:id="vFormFrontArmorThick"  initialValue="0" max="1000" minHeight="-Infinity" />
+                                <Spinner fx:id="vFormSideArmorThick"  initialValue="0" layoutX="10.0" layoutY="90.0" max="1000" min="0" minHeight="-Infinity" />
+                                <Spinner fx:id="vFormFrontArmorAngle"  initialValue="0" layoutX="10.0" layoutY="136.0" max="180" min="0" minHeight="-Infinity" />
+                                <Spinner fx:id="vFormSideArmorAngle"  initialValue="0" layoutX="10.0" layoutY="136.0" max="180" min="0" minHeight="-Infinity" />
                                 <ChoiceBox fx:id="vFormGun" minHeight="-Infinity" prefWidth="150.0" />
                             </children>
                         </VBox>

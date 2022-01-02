@@ -72,10 +72,10 @@
                                            maxHeight="-Infinity" minHeight="-Infinity"/>
                                 <TextField id="gEditAmmoType" fx:id="gEditAmmoType" layoutX="10.0" layoutY="130.0"
                                            maxHeight="-Infinity" minHeight="-Infinity"/>
-                                <Spinner fx:id="gEditCalliber" editable="true" max="1000." min="1."/>
-                                <Spinner fx:id="gEditBarrelLenght" editable="true" layoutX="10.0" layoutY="290.0"
+                                <Spinner fx:id="gEditCalliber" max="1000." min="1."/>
+                                <Spinner fx:id="gEditBarrelLenght"  layoutX="10.0" layoutY="290.0"
                                          max="10000." min="1."/>
-                                <Spinner fx:id="gEditMuzzleVelocity" editable="true" layoutX="10.0" layoutY="335.0"
+                                <Spinner fx:id="gEditMuzzleVelocity" layoutX="10.0" layoutY="335.0"
                                          max="10000" min="1"/>
                             </children>
                         </VBox>

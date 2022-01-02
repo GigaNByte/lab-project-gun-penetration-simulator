@@ -91,7 +91,7 @@ public class VehicleFormController implements Initializable {
                                 } else {
                                     btn.setOnAction(event -> {
                                         //delete gun
-                                        Context.getInstance().deleteEntityById(Vehicle.class, vID);
+                                        Context.getInstance().deleteVehicleById(vID);
                                         //updates gTable
                                         vTable.setItems(Context.getInstance().getVehicleTable());
                                     });
@@ -137,6 +137,7 @@ public class VehicleFormController implements Initializable {
             try {
                 //TODO: replace code below as  addVehicle method in Context
                 Context.getInstance().saveOrUpdateEntity(newVehicle);
+                Context.getInstance().refreshFireTestTable();
                 vTable.setItems(Context.getInstance().getVehicleTable());
                 //TODO:Color does not work
                 vFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");

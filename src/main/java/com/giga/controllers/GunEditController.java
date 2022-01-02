@@ -211,6 +211,8 @@ public class GunEditController implements Initializable {
                 newGun.setMuzzleVelocity(gEditMuzzleVelocity.getValue());
                 newGun.setCaliber(gEditCalliber.getValue().doubleValue());
                 Context.getInstance().saveOrUpdateEntity(newGun);
+                Context.getInstance().refreshFireTestTable();
+                Context.getInstance().refreshVehicleTable();
                 handleChart();
                 gEditErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
                 gEditErrorMessage.setText("Edited gun successfully");

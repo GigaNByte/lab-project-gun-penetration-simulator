@@ -27,7 +27,9 @@ public class App extends Application {
 
         SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
         Session session = sessionFactory.openSession();
+       // session.createQuery("PRAGMA foreign_keys = ON;");
         session.close();
+
         //migrate db
         Flyway flyway = Flyway.configure().dataSource("jdbc:sqlite:sqlite/db/gps.db", null, null).baselineOnMigrate(true).load();
         flyway.migrate();
@@ -47,7 +49,7 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("view/" + fxml + ".fxml"));
         fxmlLoader.setController(MainController.getInstance());
         return fxmlLoader.load();
-    }
+}
 
     public static void main(String[] args) {
         launch();

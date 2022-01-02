@@ -148,7 +148,7 @@ public class GunFormController implements Initializable {
                                 } else {
                                     btn.setOnAction(event -> {
                                         //delete gun
-                                        Context.getInstance().deleteEntityById(Gun.class, (gunID));
+                                        Context.getInstance().deleteGunById(gunID);
                                         //updates gTable
                                         gTable.setItems(Context.getInstance().getGunTable());
                                     });
@@ -176,8 +176,6 @@ public class GunFormController implements Initializable {
      */
     @FXML
     public void submitGunForm() throws IOException {
-
-        Double ja = gFormCalliber.getValue().doubleValue();
         if (gFormName.getText().isEmpty()
                 || gFormName.getText().isEmpty()
                 || gFormAmmoName.getText().isEmpty()

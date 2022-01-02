@@ -41,7 +41,8 @@ public class Vehicle {
     }
 
     //TODO delete on cascade doesn't work:https://stackoverflow.com/questions/14875793/jpa-hibernate-how-to-define-a-constraint-having-on-delete-cascade
-    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    //TODO: posible solution: https://stackoverflow.com/questions/9774923/how-do-you-enforce-foreign-key-constraints-in-sqlite-through-java
+    @OneToMany(mappedBy = "vehicle", cascade = {CascadeType.REMOVE}, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     public Set<FireTest> getSaved_tests_vehicle() {
         return saved_tests_vehicle;
