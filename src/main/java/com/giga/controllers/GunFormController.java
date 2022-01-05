@@ -216,6 +216,7 @@ public class GunFormController implements Initializable {
                 gFormErrorMessage.setStyle("-fx-text-inner-color: red;-fx-text-fill: red;");
                 gFormErrorMessage.setText("Error at adding gun");
                 gFormErrorMessage.setVisible(true);
+                e.printStackTrace();
             }
 
         }

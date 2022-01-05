@@ -10,11 +10,11 @@
         <property name="javax.persistence.jdbc.user"></property>
         <property name="javax.persistence.jdbc.password"></property>
         <property name="connection.url">jdbc:sqlite:sqlite/db/gps.db</property>
-        <property name="hibernate.show_sql" >true</property>
+        <property name="hibernate.show_sql" >false</property>
         <property name="format_sql">true</property>
         <property name="hibernate.connection.charSet"  >UTF-8</property>
         <property name="hibernate.hbm2ddl.auto" >update</property>
-        <property name="hibernate.generate_statistics">true</property>
+        <property name="hibernate.generate_statistics">false</property>
         <property name="hibernate.connection.foreign_keys">true</property>
         <mapping class="com.giga.model.Gun"/>
         <mapping class="com.giga.model.Vehicle"/>

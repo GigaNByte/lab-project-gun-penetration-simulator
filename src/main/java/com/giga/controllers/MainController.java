@@ -36,7 +36,7 @@ public class MainController implements Initializable {
 
     @FXML
     private final static MainController instance = new MainController();
-
+    
     @FXML
     private TabPane MainTabPane;
 

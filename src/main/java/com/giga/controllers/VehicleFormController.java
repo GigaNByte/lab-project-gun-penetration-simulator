@@ -135,19 +135,21 @@ public class VehicleFormController implements Initializable {
             newVehicle.setSideArmorAngle((Integer) vFormSideArmorAngle.getValue());
 
             try {
-                //TODO: replace code below as  addVehicle method in Context
                 Context.getInstance().saveOrUpdateEntity(newVehicle);
                 Context.getInstance().refreshFireTestTable();
                 vTable.setItems(Context.getInstance().getVehicleTable());
-                //TODO:Color does not work
-                vFormErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
-                vFormErrorMessage.setText("Added gun successfully");
+                //TODO:Color change does not work
+
+                vFormErrorMessage.setText("Added vehicle successfully");
+                vFormErrorMessage.setStyle("-fx-text-inner-color: green;");
                 vFormErrorMessage.setVisible(true);
 
             } catch (Exception e) {
-                vFormErrorMessage.setStyle("-fx-text-inner-color: red;-fx-text-fill: red;");
+
                 vFormErrorMessage.setText("Error at adding vehicle");
+                vFormErrorMessage.setStyle("-fx-text-inner-color: red;-fx-text-fill: red;");
                 vFormErrorMessage.setVisible(true);
+                e.printStackTrace();
             }
         }
 

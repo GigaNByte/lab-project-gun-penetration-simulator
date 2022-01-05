@@ -10,12 +10,19 @@ Demo database contains some WWII German and Soviet normalized gun&shell test dat
 <hr>
 
 # Basic usage
- ### Gun CRUD Interface:
+ 
+### Gun CRUD Interface:
+
+View consists of tableview of all avaible guns in database.
+Gun form allows to create new Guns by entering gun data textfields and spinners. 
+ In Tableview we can delete single records using "Delete" button, or examine and edit penetration table parameters or edit existing gun details using "Edit" button.
 
 ![](./readme/1.gif) 
 ![](./readme/1.png)
 
 ### Gun Edit Penetration Table CRUD Interface:
+
+After editing details press "Update Gun Data" button to commit changes.
 
 ![](./readme/2.png)
 
@@ -23,10 +30,15 @@ Demo database contains some WWII German and Soviet normalized gun&shell test dat
  
  ### Vehicle CRUD Interface:
 
+ Application provides similar interface to create vehicle. To add new vehicle, fill a form, select gun from existing database and press "Add Vehicle.
+ 
  ![](./readme/3.png)
  ![](./readme/2.gif)
 
  ### FireTest CRUD Interface:
+
+To perform Firetests you need to provide test vehicle from which we want to shoot, and target vehicle with targeted tank/vehicle part (Front or Side hull). 
+You can provide secondary angle witch shell will hit the armor (to simulate shooting from highground). App will caluclate if shell will penetrate armor, based on penetration tables from gun form. 
 
  ![](./readme/4.png)
  ![](./readme/3.gif)

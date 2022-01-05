@@ -160,4 +160,7 @@ public class FireTest {
         this.targetVehiclePart = targetVehiclePart;
     }
 
+    public void calculateResult(){
+        Context.getInstance().calculateFireTestResult(this);
+    }
 }

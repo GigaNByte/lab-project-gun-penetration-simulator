@@ -216,6 +216,7 @@ public class GunEditController implements Initializable {
                 handleChart();
                 gEditErrorMessage.setStyle("-fx-text-inner-color: green;-fx-text-fill: green;");
                 gEditErrorMessage.setText("Edited gun successfully");
+                gEditErrorMessage.setText("Vehicles and FireTests updated");
             }
             gEditErrorMessage.setVisible(true);
 
