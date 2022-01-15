@@ -109,14 +109,14 @@
         <VBox layoutX="385.0" layoutY="34.0"/>
         <TableView fx:id="gPenTable" layoutX="387.0" layoutY="388.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="100.0">
             <columns>
-                <TableColumn fx:id="gPenTable100" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="100m"/>
-                <TableColumn fx:id="gPenTable300" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="300m"/>
-                <TableColumn fx:id="gPenTable500" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="500m"/>
-                <TableColumn fx:id="gPenTable1000" maxWidth="-1.0" minWidth="80.0" prefWidth="-1.0" text="1000m"/>
-                <TableColumn fx:id="gPenTable1500" maxWidth="-1.0" minWidth="50.0" prefWidth="-1.0" text="1500m"/>
-                <TableColumn fx:id="gPenTable2000" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="2000m"/>
-                <TableColumn fx:id="gPenTable2500" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="2500m"/>
-                <TableColumn fx:id="gPenTable3000" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="3000m"/>
+                <TableColumn fx:id="gPenTable100"  maxWidth="Infinity" minWidth="100.0" prefWidth="-1.0" text="100m"/>
+                <TableColumn fx:id="gPenTable300"  maxWidth="Infinity" minWidth="100.0" prefWidth="-1.0" text="300m"/>
+                <TableColumn fx:id="gPenTable500" maxWidth="Infinity" minWidth="80.0" prefWidth="-1.0" text="500m"/>
+                <TableColumn fx:id="gPenTable1000"  maxWidth="Infinity" minWidth="80.0" prefWidth="-1.0" text="1000m"/>
+                <TableColumn fx:id="gPenTable1500"  maxWidth="Infinity" minWidth="50.0" prefWidth="-1.0" text="1500m"/>
+                <TableColumn fx:id="gPenTable2000"  maxWidth="Infinity" minWidth="100.0" prefWidth="-1.0" text="2000m"/>
+                <TableColumn fx:id="gPenTable2500"  maxWidth="Infinity" minWidth="100.0" prefWidth="-1.0" text="2500m"/>
+                <TableColumn fx:id="gPenTable3000"  maxWidth="Infinity" minWidth="120.0" prefWidth="-1.0" text="3000m"/>
             </columns>
         </TableView>
         <LineChart id="gEditPenChart" fx:id="gEditPenChart" layoutX="387.0" layoutY="34.0" legendSide="TOP"

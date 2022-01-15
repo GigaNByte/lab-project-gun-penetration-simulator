@@ -66,7 +66,7 @@ public class AppTest {
         FireTest testFireTest = new FireTest();
         testFireTest.setTestName("test1");
         testFireTest.setResult(FireTest.TestResult.PENETRATION);
-        testFireTest.setShotAngle(0);
+        testFireTest.setShotVerticalAngle(0);
         testFireTest.setShotDistance(10);
         testFireTest.setTargetVehicle(testVehicle);
         testFireTest.setVehicle(testVehicle2);
@@ -76,7 +76,7 @@ public class AppTest {
         FireTest testFireTest2 = new FireTest();
         testFireTest2.setTestName("test2");
         testFireTest2.setResult(FireTest.TestResult.PENETRATION);
-        testFireTest2.setShotAngle(10);
+        testFireTest2.setShotVerticalAngle(10);
         testFireTest2.setShotDistance(10);
         testFireTest2.setTargetVehicle(testVehicle2);
         testFireTest2.setVehicle(testVehicle);

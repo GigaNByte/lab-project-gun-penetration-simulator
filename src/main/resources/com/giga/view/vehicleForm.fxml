@@ -63,10 +63,10 @@
                             <children>
                                 <TextField fx:id="vFormName" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" />
                                 <TextField fx:id="vFormNation" layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" />
-                                <Spinner fx:id="vFormFrontArmorThick"  initialValue="0" max="1000" minHeight="-Infinity" />
-                                <Spinner fx:id="vFormSideArmorThick"  initialValue="0" layoutX="10.0" layoutY="90.0" max="1000" min="0" minHeight="-Infinity" />
-                                <Spinner fx:id="vFormFrontArmorAngle"  initialValue="0" layoutX="10.0" layoutY="136.0" max="180" min="0" minHeight="-Infinity" />
-                                <Spinner fx:id="vFormSideArmorAngle"  initialValue="0" layoutX="10.0" layoutY="136.0" max="180" min="0" minHeight="-Infinity" />
+                                <Spinner fx:id="vFormFrontArmorThick" initialValue="0" max="1000" minHeight="-Infinity" />
+                                <Spinner fx:id="vFormSideArmorThick" initialValue="0" layoutX="10.0" layoutY="90.0" max="1000" min="0" minHeight="-Infinity" />
+                                <Spinner fx:id="vFormFrontArmorAngle" initialValue="0" layoutX="10.0" layoutY="136.0" max="90" min="0" minHeight="-Infinity" />
+                                <Spinner fx:id="vFormSideArmorAngle" initialValue="0" layoutX="10.0" layoutY="136.0" max="90" min="0" minHeight="-Infinity" />
                                 <ChoiceBox fx:id="vFormGun" minHeight="-Infinity" prefWidth="150.0" />
                             </children>
                         </VBox>
@@ -101,18 +101,28 @@
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="444.0" layoutY="35.0" prefHeight="399.0"  maxWidth="Infinity">
+        <VBox layoutX="444.0" layoutY="35.0" maxWidth="Infinity" prefHeight="457.0" prefWidth="982.0">
             <children>
-                <TableView fx:id="vTable" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0"  maxWidth="Infinity">
+                <HBox prefHeight="76.0" prefWidth="982.0">
+                    <children>
+                        <Label prefHeight="25.0" prefWidth="66.0" text="Search:" textAlignment="CENTER">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="vFilterField" maxWidth="918.0" prefHeight="25.0" prefWidth="918.0" />
+                    </children>
+                </HBox>
+                <TableView fx:id="vTable" maxWidth="Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="449.0" prefWidth="982.0">
                     <columns>
-                        <TableColumn fx:id="vNameColumn" minWidth="81.0" prefWidth="150.0" maxWidth="Infinity" text="Vehicle Name" />
-                        <TableColumn fx:id="vGunColumn" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Gun" />
-                        <TableColumn fx:id="vNationColumn" maxWidth="133.0" minWidth="29.0" prefWidth="133.0" text="Nation" />
-                        <TableColumn fx:id="vFrontThickColumn" maxWidth="173.0" minWidth="77.0" prefWidth="148.0" text="Front Armor Thick. (mm)" />
-                        <TableColumn fx:id="vFrontArmorAngleColumn" maxWidth="136.0" minWidth="76.0" prefWidth="113.0" text="Front Armor Angle" />
-                        <TableColumn fx:id="vSideThickColumn" maxWidth="154.0" minWidth="106.0" prefWidth="140.0" text="Side Armor Thick. (mm)" />
-                        <TableColumn fx:id="vSideArmorAngleColumn" maxWidth="158.0" minWidth="92.0" prefWidth="113.0" text="Side Armor Angle" />
-                        <TableColumn fx:id="vDelete" maxWidth="143.0" minWidth="0.0" prefWidth="83.0" text="Delete" />
+                        <TableColumn fx:id="vNameColumn" maxWidth="Infinity" minWidth="81.0" prefWidth="150.0" text="Vehicle Name" />
+                        <TableColumn fx:id="vGunColumn" maxWidth="Infinity" minWidth="100.0" prefWidth="100.0" text="Gun" />
+                        <TableColumn fx:id="vNationColumn" maxWidth="Infinity" minWidth="29.0" prefWidth="133.0" text="Nation" />
+                        <TableColumn fx:id="vFrontThickColumn" maxWidth="Infinity" minWidth="77.0" prefWidth="148.0" text="Front Armor Thick. (mm)" />
+                        <TableColumn fx:id="vFrontArmorAngleColumn" maxWidth="Infinity" minWidth="76.0" prefWidth="113.0" text="Front Armor Angle" />
+                        <TableColumn fx:id="vSideThickColumn" maxWidth="Infinity" minWidth="106.0" prefWidth="140.0" text="Side Armor Thick. (mm)" />
+                        <TableColumn fx:id="vSideArmorAngleColumn" maxWidth="Infinity" minWidth="92.0" prefWidth="113.0" text="Side Armor Angle" />
+                        <TableColumn fx:id="vDelete" maxWidth="Infinity" minWidth="0.0" prefWidth="83.0" text="Delete" />
                     </columns>
                 </TableView>
             </children>

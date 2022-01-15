@@ -1,14 +1,22 @@
 package com.giga.controllers;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
 import com.giga.model.Context;
 import com.giga.model.Gun;
 import com.giga.model.Vehicle;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 
@@ -55,7 +63,8 @@ public class VehicleFormController implements Initializable {
     private TableColumn<Vehicle, Integer> vSideArmorAngleColumn;
     @FXML
     private TableColumn vDelete;
-
+    @FXML
+    private TextField vFilterField;
 
     @FXML
     @Override
@@ -67,7 +76,6 @@ public class VehicleFormController implements Initializable {
         vSideThickColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("sideArmorThickness"));
         vFrontArmorAngleColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("frontArmorAngle"));
         vSideArmorAngleColumn.setCellValueFactory(new PropertyValueFactory<Vehicle, Integer>("sideArmorAngle"));
-        vTable.setItems(Context.getInstance().getVehicleTable());
 
         //retrieves gun dropdown list
         vFormGun.setItems(Context.getInstance().getGunTable());
@@ -104,6 +112,71 @@ public class VehicleFormController implements Initializable {
                     }
                 };
         vDelete.setCellFactory(cellDeleteFactory);
+
+
+        //speed up spinners
+        List<Spinner> Spinners= Arrays.asList(vFormFrontArmorThick,vFormSideArmorThick,vFormFrontArmorAngle,vFormSideArmorAngle);
+        IncrementHandler handler = new IncrementHandler();
+        for (Spinner spinner:Spinners) {
+            spinner.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
+            spinner.addEventFilter(MouseEvent.MOUSE_RELEASED, evt -> {
+                Node node = evt.getPickResult().getIntersectedNode();
+                if (node.getStyleClass().contains("increment-arrow-button") ||
+                        node.getStyleClass().contains("decrement-arrow-button")) {
+                    if (evt.getButton() == MouseButton.PRIMARY) {
+                        handler.stop();
+                    }
+                }
+            });
+        }
+
+        //bind sorted table to tableview
+        Context.getInstance().getSortedVehicleTable().comparatorProperty().bind(vTable.comparatorProperty());
+        vTable.setItems(Context.getInstance().getFilteredVehicleTable());
+
+        //adds comparator to sort by column
+        //https://stackoverflow.com/questions/17958337/javafx-tableview-with-filteredlist-jdk-8-does-not-sort-by-column
+        //https://stackoverflow.com/questions/50109815/javafx-tableview-sort-by-custom-rule-then-by-column-selection
+        vTable.sortPolicyProperty().set(new Callback<TableView<Vehicle>, Boolean>() {
+            @Override
+            public Boolean call(TableView<Vehicle> param) {
+                final Comparator<Vehicle> tableComparator = vTable.getComparator();
+                // if the column is set to unsorted, tableComparator can be null
+                Comparator<Vehicle> comparator = tableComparator == null ? null : new Comparator<Vehicle>() {
+                    @Override
+                    public int compare(Vehicle o1, Vehicle o2) {
+                        // secondly sort by the comparator that was set for the table
+                        return tableComparator.compare(o1, o2);
+                    }
+                };
+                vTable.setItems(Context.getInstance().getFilteredVehicleTable().sorted(comparator));
+                return true;
+            }
+        });
+
+
+        //search
+        Context.getInstance().getSortedVehicleTable().comparatorProperty().bind(vTable.comparatorProperty());
+        vTable.setItems(Context.getInstance().getFilteredVehicleTable());
+
+        vFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            Context.getInstance().getSortedVehicleTable().comparatorProperty().bind(vTable.comparatorProperty());
+            Context.getInstance().getFilteredVehicleTable().setPredicate(vehicle -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (vehicle.getVehicleName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (vehicle.getGun().getGunName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+            vTable.setItems(Context.getInstance().getFilteredVehicleTable());
+        });
     }
 
     /**

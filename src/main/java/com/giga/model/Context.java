@@ -4,12 +4,18 @@ package com.giga.model;
 import com.giga.HibernateConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TableView;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 
 import javax.persistence.Query;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 //TODO: Make this Singleton Thread Safe
 
@@ -21,13 +27,64 @@ import java.util.List;
  */
 public class Context {
     private SessionFactory sessionFactory = HibernateConnection.getSessionFactory();
-    @FXML
-    private ObservableList<FireTest> fireTestTable = FXCollections.observableArrayList();
-    @FXML
-    private ObservableList<Vehicle> vehicleTable = FXCollections.observableArrayList();
-    @FXML
-    private ObservableList<Gun> gunTable = FXCollections.observableArrayList();
 
+    private ObservableList<FireTest> fireTestTable = FXCollections.observableArrayList();
+    private ObservableList<Vehicle> vehicleTable = FXCollections.observableArrayList();
+    private ObservableList<Gun> gunTable = FXCollections.observableArrayList();
+    private FilteredList<Gun> filteredGunTable = new FilteredList<>(gunTable, p -> true);
+    private FilteredList<FireTest> filteredFireTestTable = new FilteredList<>(fireTestTable, p -> true);
+    private FilteredList<Vehicle> filteredVehicleTable = new FilteredList<>(vehicleTable, p -> true);
+    private SortedList<Gun> sortedGunTable =  new SortedList<>(filteredGunTable);
+    private SortedList<FireTest> sortedFireTestTable =  new SortedList<>(filteredFireTestTable);
+    private SortedList<Vehicle> sortedVehicleTable =  new SortedList<>(filteredVehicleTable);
+
+    /**
+     * @since 1.2
+     * @return FilteredList of Gun Entities
+     */
+    public FilteredList<Gun> getFilteredGunTable() {
+        return filteredGunTable;
+    }
+
+    /**
+     * @since 1.2
+     * @return SortedList of Gun Entities
+     */
+    public SortedList<Gun> getSortedGunTable() {
+        return sortedGunTable;
+    }
+
+    /**
+     * @since 1.2
+     * @return SortedList of FireTests Entities
+     */
+    public SortedList<FireTest> getSortedFireTestTable() {
+        return new SortedList<FireTest>(filteredFireTestTable);
+    }
+
+    /**
+     * @since 1.2
+     * @return SortedList of Vehicles Entities
+     */
+    public SortedList<Vehicle> getSortedVehicleTable() {
+        return sortedVehicleTable;
+    }
+
+    /**
+     * @since 1.2
+     * @return FilteredList of FireTests Entities
+     */
+    public FilteredList<FireTest> getFilteredFireTestTable() {
+        return filteredFireTestTable;
+    }
+
+    /**
+     * @since 1.2
+     * @return FilteredList of Vehicle Entities
+     */
+    public FilteredList<Vehicle> getFilteredVehicleTable() {
+        return filteredVehicleTable;
+    }
 
     /**
      * @return FireTests Entities from Database
@@ -39,6 +96,7 @@ public class Context {
         session.getTransaction().commit();
         session.close();
         fireTestTable.setAll(allFireTests);
+        filteredFireTestTable = new FilteredList<FireTest>(fireTestTable, p -> true);
         return fireTestTable;
     }
 
@@ -275,30 +333,29 @@ public class Context {
      */
 
     public void calculateFireTestResult(FireTest firetest) {
+        //TODO: Optimize radians to degrees etc.
         Double armorThickness = 0d;
-        Double effectiveArmorThickness = 0d;
-        Double absoluteShotAngle = 0d;
+        Double relativeArmorThickness = 0d;
+        Double absVerticalShotAngle = 0d;
         Integer rhaGunPenetration = 0;
 
-        //TODO:Implement Armor part Class or extend enum to contain thickness value
-        //TODO:Implement second Shot angle variable (vertical angle)
-        //calculates effective armor thickness
+        //calculates relative armor thickness
         if (firetest.getTargetVehiclePart() == FireTest.VehiclePart.FRONT_ARMOR) {
             armorThickness = Double.valueOf(firetest.getTargetVehicle().getFrontArmorThickness());
-            absoluteShotAngle = (double) (firetest.getTargetVehicle().getFrontArmorAngle() - firetest.getShotAngle());
+            absVerticalShotAngle = (double) (firetest.getTargetVehicle().getFrontArmorAngle() + firetest.getShotVerticalAngle());
 
         } else if (firetest.getTargetVehiclePart() == FireTest.VehiclePart.SIDE_ARMOR) {
             armorThickness = Double.valueOf(firetest.getTargetVehicle().getSideArmorThickness());
-            absoluteShotAngle = (double) (firetest.getTargetVehicle().getSideArmorAngle() - firetest.getShotAngle());
+            absVerticalShotAngle = (double) (firetest.getTargetVehicle().getSideArmorAngle() + firetest.getShotVerticalAngle());
         }
+        Double a = Math.toRadians(Math.abs(absVerticalShotAngle));
+        Double b = Math.toRadians(firetest.getShotHorizontalAngle());
 
-        if (absoluteShotAngle > 0) {
-            effectiveArmorThickness = armorThickness / Math.sin(Math.toRadians(Math.abs(absoluteShotAngle)));
-        } else if ((absoluteShotAngle < 0)) {
-            effectiveArmorThickness = armorThickness / Math.cos(Math.toRadians(Math.abs(absoluteShotAngle)));
-        }else{
-            effectiveArmorThickness = armorThickness;
-        }
+        double[] vectorVertical = { 0., Math.tan(Math.toRadians(90-Math.abs(absVerticalShotAngle))), 1. };
+        double[] vectorHorizontal = { Math.tan(Math.toRadians((double) firetest.getShotHorizontalAngle())), 1., 0. };
+
+        Double shotAngleCompound =  VectorAngle.angleBetweenVectors(vectorVertical,vectorHorizontal);
+
 
         //TODO:Implement "Shell Critical Bounce Angle" variable dependent from ammo type
         //TODO: Penetration values could be stored here as Map
@@ -330,26 +387,38 @@ public class Context {
             default:
                 // code block
         }
+        double CosAngleCompound = Math.cos(Math.toRadians(shotAngleCompound));
+        relativeArmorThickness = armorThickness / CosAngleCompound;
+        if (Math.cos(Math.toRadians(shotAngleCompound)) <= 0 ||  absVerticalShotAngle >= 90.){
 
-        System.out.println("=========Firetest========");
-        System.out.println("actual: " + armorThickness);
-        System.out.printf("efective: %f\n", effectiveArmorThickness);
-        System.out.println("abs angle: " + absoluteShotAngle);
-        System.out.println("shot angle" + firetest.getShotAngle());
-        System.out.println("armor angle" + firetest.getTargetVehicle().getFrontArmorAngle());
-        System.out.println("gun penetration: " + rhaGunPenetration);
-        System.out.println("=========================");
+            firetest.setResult(FireTest.TestResult.NO_PENETRATION);
+            firetest.setRelativeArmorThickness(Double.POSITIVE_INFINITY);
+            firetest.setShotCompoundAngle(Math.round(shotAngleCompound*100.0)/100.0);
+        }else {
 
-        if (rhaGunPenetration >= effectiveArmorThickness) {
+            firetest.setShotCompoundAngle(Math.round(shotAngleCompound*100.0)/100.0);
+            firetest.setRelativeArmorThickness(Math.round(relativeArmorThickness*100.0)/100.0);
+        }
+
+        if (rhaGunPenetration >= relativeArmorThickness) {
             firetest.setResult(FireTest.TestResult.PENETRATION);
-
         } else {
             firetest.setResult(FireTest.TestResult.NO_PENETRATION);
         }
 
 
-    }
+        System.out.println("=========Firetest========");
+        System.out.println("actual: " + armorThickness);
+        System.out.printf("efective: %f\n", relativeArmorThickness);
+        System.out.println("abs vertical angle: " + absVerticalShotAngle);
+        System.out.println("shot angle vertical" + firetest.getShotVerticalAngle());
+        System.out.println("shot angle horizontal" + firetest.getShotHorizontalAngle());
+        System.out.println("angle compound" + shotAngleCompound);
+        System.out.println("armor angle" + firetest.getTargetVehicle().getFrontArmorAngle());
+        System.out.println("gun penetration: " + rhaGunPenetration);
+        System.out.println("=========================");
 
+    }
 
     private final static Context instance = new Context();
 

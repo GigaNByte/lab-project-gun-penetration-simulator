@@ -2,23 +2,31 @@ package com.giga.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import com.giga.App;
 import com.giga.HibernateConnection;
 import com.giga.model.Context;
+import com.giga.model.FireTest;
 import com.giga.model.Gun;
 import com.giga.model.Vehicle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -78,6 +86,9 @@ public class GunFormController implements Initializable {
     private TableColumn gDelete;
     @FXML
     private MainController MainController;
+    @FXML
+    private TextField gFilterField;
+
 
 
     @FXML
@@ -165,8 +176,65 @@ public class GunFormController implements Initializable {
         gEdit.setCellFactory(cellEditFactory);
         gDelete.setCellFactory(cellDeleteFactory);
 
-        //updates gTable
-        gTable.setItems(Context.getInstance().getGunTable());
+        //speed up spinners
+        List<Spinner> Spinners= Arrays.asList(gFormBarrelLenght,gFormCalliber,gFormMuzzleVelocity);
+        IncrementHandler handler = new IncrementHandler();
+        for (Spinner spinner:Spinners) {
+            spinner.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
+            spinner.addEventFilter(MouseEvent.MOUSE_RELEASED, evt -> {
+                Node node = evt.getPickResult().getIntersectedNode();
+                if (node.getStyleClass().contains("increment-arrow-button") ||
+                        node.getStyleClass().contains("decrement-arrow-button")) {
+                    if (evt.getButton() == MouseButton.PRIMARY) {
+                        handler.stop();
+                    }
+                }
+            });
+        }
+
+        //bind sorted table to tableview
+        Context.getInstance().getSortedGunTable().comparatorProperty().bind(gTable.comparatorProperty());
+        gTable.setItems(Context.getInstance().getFilteredGunTable());
+
+        //adds comparator to sort by column
+        //https://stackoverflow.com/questions/17958337/javafx-tableview-with-filteredlist-jdk-8-does-not-sort-by-column
+        //https://stackoverflow.com/questions/50109815/javafx-tableview-sort-by-custom-rule-then-by-column-selection
+        gTable.sortPolicyProperty().set(new Callback<TableView<Gun>, Boolean>() {
+            @Override
+            public Boolean call(TableView<Gun> param) {
+                final Comparator<Gun> tableComparator = gTable.getComparator();
+                // if the column is set to unsorted, tableComparator can be null
+                Comparator<Gun> comparator = tableComparator == null ? null : new Comparator<Gun>() {
+                    @Override
+                    public int compare(Gun o1, Gun o2) {
+                        // secondly sort by the comparator that was set for the table
+                        return tableComparator.compare(o1, o2);
+                    }
+                };
+                gTable.setItems(Context.getInstance().getFilteredGunTable().sorted(comparator));
+                return true;
+            }
+        });
+
+        gFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            Context.getInstance().getSortedGunTable().comparatorProperty().bind(gTable.comparatorProperty());
+            Context.getInstance().getFilteredGunTable().setPredicate(gun -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (gun.getGunName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (gun.getCaliber().toString().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+            gTable.setItems(Context.getInstance().getFilteredGunTable());
+        });
+
 
     }
 

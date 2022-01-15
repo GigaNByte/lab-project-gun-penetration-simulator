@@ -57,7 +57,10 @@ public class FireTest {
     private Integer id;
     private String testName;
     private Date testDate;
-    private Integer shotAngle;
+    private Integer shotVerticalAngle;
+    private Integer shotHorizontalAngle;
+    private Double shotCompoundAngle;
+    private Double relativeArmorThickness;
     private Integer shotDistance;
     private Vehicle vehicle;
     private Vehicle targetVehicle;
@@ -89,7 +92,7 @@ public class FireTest {
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "targetVehicle", nullable = false)
+    @JoinColumn(name = "target_vehicle", nullable = false)
     public Vehicle getTargetVehicle() {
         return targetVehicle;
     }
@@ -122,16 +125,44 @@ public class FireTest {
     }
 
     @Basic
-    @Column(name = "shot_angle", nullable = false)
-    public Integer getShotAngle() {
-        return shotAngle;
+    @Column(name = "shot_vertical_angle", nullable = false)
+    public Integer getShotVerticalAngle() {
+        return shotVerticalAngle;
     }
 
-    public void setShotAngle(Integer shotAngle) {
-        this.shotAngle = shotAngle;
+    public void setShotVerticalAngle(Integer shotVerticalAngle) {
+        this.shotVerticalAngle = shotVerticalAngle;
     }
 
-    @Column(name = "shotDistance", nullable = false)
+    @Basic
+    @Column(name = "shot_horizontal_angle", nullable = false)
+    public Integer getShotHorizontalAngle() {
+        return shotHorizontalAngle;
+    }
+
+    public void setShotHorizontalAngle(Integer shotHorizontalAngle) {
+        this.shotHorizontalAngle = shotHorizontalAngle;
+    }
+    @Basic
+    @Column(name = "shot_compound_angle", nullable = false)
+    public Double getShotCompoundAngle() {
+        return shotCompoundAngle;
+    }
+
+    public void setShotCompoundAngle(Double shotCompoundAngle) {
+        this.shotCompoundAngle = shotCompoundAngle;
+    }
+    @Basic
+    @Column(name = "relative_armor_thickness", nullable = false)
+    public Double getRelativeArmorThickness() {
+        return relativeArmorThickness;
+    }
+
+    public void setRelativeArmorThickness(Double relativeArmorThickness) {
+        this.relativeArmorThickness = relativeArmorThickness;
+    }
+
+    @Column(name = "shot_distance", nullable = false)
     public Integer getShotDistance() {
         return shotDistance;
     }
@@ -151,7 +182,7 @@ public class FireTest {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "targetVehiclePart", nullable = false)
+    @Column(name = "target_vehicle_part", nullable = false)
     public VehiclePart getTargetVehiclePart() {
         return targetVehiclePart;
     }

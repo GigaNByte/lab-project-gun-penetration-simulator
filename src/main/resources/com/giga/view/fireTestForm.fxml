@@ -14,9 +14,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.giga.controllers.FireTestFormController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="517.0" prefWidth="1592.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.giga.controllers.FireTestFormController">
     <children>
-        <VBox layoutX="26.0" layoutY="34.0">
+        <VBox layoutX="26.0" layoutY="34.0" prefHeight="443.0" prefWidth="342.0">
             <children>
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0">
                     <children>
@@ -42,7 +42,12 @@
                                         <Font size="16.0" />
                                     </font>
                                 </Label>
-                                <Label text="Shot angle">
+                                <Label text="Shot Vertical angle">
+                                    <font>
+                                        <Font size="16.0" />
+                                    </font>
+                                </Label>
+                                <Label text="Shot Horizontal angle">
                                     <font>
                                         <Font size="16.0" />
                                     </font>
@@ -60,7 +65,8 @@
                                 <ChoiceBox fx:id="ftFormVehicle" minHeight="-Infinity" prefWidth="150.0" />
                                 <ChoiceBox fx:id="ftFormTargetVehicle" minHeight="-Infinity" prefWidth="150.0" />
                                 <ChoiceBox fx:id="ftFormTargetVehiclePart" maxHeight="20.0" minHeight="-Infinity" prefWidth="150.0" />
-                                <Spinner fx:id="ftFormShotAngle" initialValue="0"  minHeight="-Infinity" max="180" min="-180"/>
+                                <Spinner fx:id="ftFormShotVerticalAngle" initialValue="0" max="90" min="-90" minHeight="-Infinity" />
+                                <Spinner fx:id="ftFormShotHorizontalAngle" initialValue="0" max="90" min="0" minHeight="-Infinity" />
                         <ChoiceBox fx:id="ftFormShotDistance" layoutX="10.0" layoutY="130.0" minHeight="-Infinity" prefWidth="150.0" />
                             </children>
                         </VBox>
@@ -89,18 +95,31 @@
                 </HBox>
             </children>
         </VBox>
-        <VBox layoutX="385.0" layoutY="34.0" maxWidth="Infinity">
+        <VBox layoutX="385.0" layoutY="34.0" maxWidth="Infinity" prefHeight="443.0" prefWidth="1162.0">
             <children>
-                <TableView fx:id="ftTable" nodeOrientation="LEFT_TO_RIGHT" maxWidth="Infinity">
+                <HBox prefHeight="43.0" prefWidth="835.0">
+                    <children>
+                        <Label prefHeight="25.0" prefWidth="66.0" text="Search:" textAlignment="CENTER">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="ftFilterField" prefHeight="25.0" prefWidth="1090.0" />
+                    </children>
+                </HBox>
+                <TableView fx:id="ftTable" maxWidth="Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="400.0" prefWidth="1161.0">
                     <columns>
-                        <TableColumn fx:id="ftNameColumn" maxWidth="Infinity" minWidth="100.0" prefWidth="-1.0"  text="Title" />
-                        <TableColumn fx:id="ftResultColumn" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Result" />
-                        <TableColumn fx:id="ftVehicleColumn" maxWidth="Infinity" minWidth="150.0" prefWidth="-1.0" text="Vehicle" />
-                        <TableColumn fx:id="ftTargetVehicleColumn" maxWidth="Infinity" minWidth="150.0" prefWidth="-1.0" text="Target Vehicle" />
-                        <TableColumn fx:id="ftTargetVehiclePartColumn" maxWidth="-1.0" minWidth="120.0" prefWidth="-1.0" text="Targeted Part" />
-                        <TableColumn fx:id="ftShotDistanceColumn" maxWidth="75.0" minWidth="66.0" prefWidth="66.0" text="Distance (m)" />
-                        <TableColumn fx:id="ftShotAngleColumn" maxWidth="64.0" minWidth="50.0" prefWidth="64.0" text="Angle" />
-                        <TableColumn fx:id="ftDelete" maxWidth="143.0" minWidth="0.0" prefWidth="83.0" text="Delete" />
+                        <TableColumn fx:id="ftNameColumn" maxWidth="Infinity" minWidth="100.0" prefWidth="118.0" text="Title" />
+                        <TableColumn fx:id="ftResultColumn"  maxWidth="Infinity" minWidth="72.0" prefWidth="93.0" text="Result" />
+                        <TableColumn fx:id="ftVehicleColumn" maxWidth="Infinity" minWidth="139.0" prefWidth="139.0" text="Vehicle" />
+                        <TableColumn fx:id="ftTargetVehicleColumn" maxWidth="Infinity" minWidth="150.0" prefWidth="196.0" text="Target Vehicle" />
+                        <TableColumn fx:id="ftTargetVehiclePartColumn"  maxWidth="Infinity" minWidth="120.0" prefWidth="146.0" text="Targeted Part" />
+                        <TableColumn fx:id="ftShotDistanceColumn"  maxWidth="Infinity" minWidth="66.0" prefWidth="113.0" text="Distance (m)" />
+                        <TableColumn fx:id="ftShotVerticalAngleColumn"  maxWidth="Infinity" minWidth="50.0" text="Vertical Angle" />
+                        <TableColumn fx:id="ftShotHorizontalAngleColumn"  maxWidth="Infinity" minWidth="50.0" prefWidth="73.0" text="Horizontal Angle" />
+                        <TableColumn fx:id="ftShotCompoundAngleColumn"  maxWidth="Infinity" minWidth="50.0" prefWidth="94.0" text="Compound Angle" />
+                        <TableColumn fx:id="ftRelativeArmorThicknessColumn"  maxWidth="Infinity" minWidth="50.0" prefWidth="94.0" text="Relative Armor thick. (mm)" />
+                        <TableColumn fx:id="ftDelete"  maxWidth="Infinity" minWidth="0.0" prefWidth="109.0" text="Delete" />
                     </columns>
                 </TableView>
             </children>

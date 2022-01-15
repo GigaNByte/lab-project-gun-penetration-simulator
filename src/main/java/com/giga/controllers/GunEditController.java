@@ -5,6 +5,7 @@ import com.giga.model.Context;
 import com.giga.model.Gun;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -12,6 +13,8 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.converter.IntegerStringConverter;
 import org.hibernate.Session;
@@ -20,6 +23,7 @@ import org.hibernate.SessionFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -78,6 +82,8 @@ public class GunEditController implements Initializable {
     @FXML
     private LineChart<Number, Number> gEditPenChart;
 
+
+
     public GunEditController(Integer gunIndex) {
         this.gunIndex = gunIndex;
     }
@@ -121,6 +127,24 @@ public class GunEditController implements Initializable {
         gEditMuzzleVelocity.getValueFactory().setValue(editableGun.getMuzzleVelocity());
         gEditCalliber.getValueFactory().setValue(editableGun.getCaliber());
         gEditBarrelLenght.getValueFactory().setValue(editableGun.getBarrelLenght());
+
+
+        //speed up spinners
+        List<Spinner> Spinners= Arrays.asList(gEditCalliber,gEditBarrelLenght,gEditMuzzleVelocity);
+        IncrementHandler handler = new IncrementHandler();
+        for (Spinner spinner:Spinners) {
+            spinner.addEventFilter(MouseEvent.MOUSE_PRESSED, handler);
+            spinner.addEventFilter(MouseEvent.MOUSE_RELEASED, evt -> {
+                Node node = evt.getPickResult().getIntersectedNode();
+                if (node.getStyleClass().contains("increment-arrow-button") ||
+                        node.getStyleClass().contains("decrement-arrow-button")) {
+                    if (evt.getButton() == MouseButton.PRIMARY) {
+                        handler.stop();
+                    }
+                }
+            });
+        }
+
 
         //cell editing
         for (TableColumn cell : cells) {

@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="gunFormPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="531.0" prefWidth="1238.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.giga.controllers.GunFormController">
+<AnchorPane fx:id="gunFormPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="531.0" prefWidth="1530.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.giga.controllers.GunFormController">
     <children>
         <VBox layoutX="26.0" layoutY="34.0">
             <children>
@@ -64,9 +64,9 @@
                                 <TextField fx:id="gFormAmmoName" layoutX="10.0" layoutY="50.0" maxHeight="-Infinity" minHeight="-Infinity" />
                                 <TextField fx:id="gFormNation" layoutX="10.0" layoutY="90.0" maxHeight="-Infinity" minHeight="-Infinity" />
                                 <TextField fx:id="gFormAmmoType" layoutX="10.0" layoutY="130.0" maxHeight="-Infinity" minHeight="-Infinity" />
-                                <Spinner fx:id="gFormCalliber"  max="1000." min="1." />
-                                <Spinner fx:id="gFormBarrelLenght"  layoutX="10.0" layoutY="170.0" max="10000." min="1." />
-                                <Spinner fx:id="gFormMuzzleVelocity"  layoutX="10.0" layoutY="335.0" max="10000" min="1" />
+                                <Spinner fx:id="gFormCalliber" max="1000." min="1." />
+                                <Spinner fx:id="gFormBarrelLenght" layoutX="10.0" layoutY="170.0" max="10000." min="1." />
+                                <Spinner fx:id="gFormMuzzleVelocity" layoutX="10.0" layoutY="335.0" max="10000" min="1" />
                             </children>
                         </VBox>
                     </children>
@@ -94,19 +94,29 @@
             </HBox>
             </children>
         </VBox>
-        <VBox layoutX="385.0" layoutY="34.0" prefHeight="400.0" prefWidth="820.0" maxWidth="Infinity">
+        <VBox layoutX="410.0" layoutY="34.0" maxWidth="Infinity" prefHeight="457.0" prefWidth="1078.0">
             <children>
-                <TableView fx:id="gTable" nodeOrientation="LEFT_TO_RIGHT" maxWidth="Infinity">
+            <HBox prefHeight="76.0" prefWidth="820.0">
+               <children>
+                  <Label prefHeight="25.0" prefWidth="66.0" text="Search:" textAlignment="CENTER">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="gFilterField" prefHeight="25.0" prefWidth="1006.0" />
+               </children>
+            </HBox>
+                <TableView fx:id="gTable" maxWidth="Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="450.0" prefWidth="885.0">
                     <columns>
-                        <TableColumn fx:id="gNameColumn" maxWidth="Infinity" minWidth="100.0" prefWidth="172.0"  text="Gun Name" />
-                        <TableColumn fx:id="gAmmoNameColumn" maxWidth="95.0" minWidth="23.0" prefWidth="83.0" text="Ammo Name" />
-                        <TableColumn fx:id="gNationColumn" maxWidth="77.0" minWidth="25.0" prefWidth="77.0" text="Nation" />
-                        <TableColumn fx:id="gAmmoTypeColumn" maxWidth="76.0" minWidth="28.0" prefWidth="76.0" text="Ammo Type" />
-                        <TableColumn fx:id="gCaliberColumn" maxWidth="59.0" minWidth="11.0" prefWidth="50.0" text="Caliber (mm)" />
-                        <TableColumn fx:id="gBarrelLenghtColumn" maxWidth="145.0" minWidth="52.0" prefWidth="98.0" text="Barrel Lenght (mm)" />
-                        <TableColumn fx:id="gMuzzleVelocityColumn" maxWidth="220.0" minWidth="0.0" prefWidth="98.0" text="Muzzle Velocity (m/s)" />
-                        <TableColumn fx:id="gEdit" maxWidth="143.0" minWidth="0.0" prefWidth="82.0" text="Edit" />
-                        <TableColumn fx:id="gDelete" maxWidth="143.0" minWidth="0.0" prefWidth="83.0" text="Delete" />
+                        <TableColumn fx:id="gNameColumn" maxWidth="Infinity" minWidth="100.0" prefWidth="263.0" text="Gun Name" />
+                        <TableColumn fx:id="gAmmoNameColumn"  maxWidth="Infinity" minWidth="23.0" prefWidth="200.0" text="Ammo Name" />
+                        <TableColumn fx:id="gNationColumn"  maxWidth="Infinity" minWidth="25.0" prefWidth="54.0" text="Nation" />
+                        <TableColumn fx:id="gAmmoTypeColumn"  maxWidth="Infinity" minWidth="28.0" text="Ammo Type" />
+                        <TableColumn fx:id="gCaliberColumn"  maxWidth="Infinity" minWidth="11.0" prefWidth="79.0" text="Caliber (mm)" />
+                        <TableColumn fx:id="gBarrelLenghtColumn"  maxWidth="Infinity" minWidth="52.0" prefWidth="124.0" text="Barrel Lenght (mm)" />
+                        <TableColumn fx:id="gMuzzleVelocityColumn"  maxWidth="Infinity" minWidth="0.0" prefWidth="98.0" text="Muzzle Velocity (m/s)" />
+                        <TableColumn fx:id="gEdit"  maxWidth="Infinity" minWidth="0.0" prefWidth="82.0" text="Edit" />
+                        <TableColumn fx:id="gDelete"  maxWidth="Infinity" minWidth="0.0" prefWidth="94.0" text="Delete" />
                     </columns>
                 </TableView>
             </children>
