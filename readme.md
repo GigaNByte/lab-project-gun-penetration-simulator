@@ -51,6 +51,7 @@ D-5T gun from soviet T-34-85 using a BR-365 APBC shell. Let's take the scenario:
 
 </ul>
 
+
 ![](./readme/example1.gif)
 
 App calculates effective armor from formula:
