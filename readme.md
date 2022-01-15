@@ -38,7 +38,8 @@ To perform fire tests you need to provide test vehicle from which we want to sho
  ![](./readme/3.gif)
 
 <hr>
-# Fire test Example
+
+### Fire test Example
 
 Let's calculate penetration result of firing at front plate of Pzkpfw V Panther from 85mm 
 D-5T gun from soviet T-34-85 using a BR-365 APBC shell. Let's take the scenario: 
@@ -66,6 +67,7 @@ In current version of program shell type normalization angle is not counted into
 
 
 <hr>
+
 # ERD Diagram
 
 ![](./readme/erd.png)
